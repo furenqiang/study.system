@@ -1,5 +1,6 @@
 package com.furenqiang.system.config;
 
+import com.furenqiang.system.common.ResponseEnum;
 import com.furenqiang.system.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -42,16 +43,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.
                 httpBasic()
                 .authenticationEntryPoint((request, response, authException) -> {
-                    response.setStatus(403); //
+                    response.setStatus(ResponseEnum.NOTLOGIN.getCode()); //
                     response.setContentType("application/json;charset=UTF-8");
-                    response.getWriter().append("{\"code\":0,\"msg\":\"未登录!\",\"data\":\"success\"}");
+                    response.getWriter().append("{\"code\":" + ResponseEnum.NOTLOGIN.getCode() + ",\"msg\":\"" + ResponseEnum.NOTLOGIN.getMessage() + "\",\"data\":\"success\"}");
                 })
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler((request, response, ex) -> {
-                    response.setStatus(403); //
+                    response.setStatus(ResponseEnum.NOTROLE.getCode()); //
                     response.setContentType("application/json;charset=UTF-8");
-                    response.getWriter().append("{\"code\":0,\"msg\":\"权限不足!\",\"data\":\"success\"}");
+                    response.getWriter().append("{\"code\":" + ResponseEnum.NOTROLE.getCode() + " ,\"msg\":\"" + ResponseEnum.NOTROLE.getMessage() + "\",\"data\":\"success\"}");
                 })
                 .and().authorizeRequests().antMatchers("/login").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
@@ -70,7 +71,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")//设置前端传的密码字段名
                 //.loginProcessingUrl("/login")//不需要自带的登录页面
                 .successHandler((request, response, authentication) -> {
+                    //获取当前用户名称
                     String currentUser = authentication.getName();
+                    //获取用户信息
+                    Object principal = authentication.getPrincipal();
+                    //用户信息存session
+                    request.getSession().setAttribute("userInfo", principal);
                     //logger.info("用户" + currentUser + "登录成功");
                     response.setStatus(200);
                     response.setContentType("application/json;charset=UTF-8");

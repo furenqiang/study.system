@@ -37,13 +37,12 @@ public class TestController {
 
     /**
      * @return
-     * @Description 测试数据库
+     * @Description 测试查询数据库
      * @Time 2020年12月2日
      * @Author Eric
      */
-    @PreAuthorize("hasAuthority('vip')")
+    @PreAuthorize("hasAnyAuthority('vip','select')")
     @ApiOperation(value = "测试查询数据库", httpMethod = "GET")
-    //@ApiImplicitParams({@ApiImplicitParam(name = "param", value = "参数", dataType = "String")})
     @GetMapping("/getTest")
     public List<Test> getTest() throws Exception {
         return testService.getTest();
