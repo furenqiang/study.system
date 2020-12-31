@@ -50,7 +50,7 @@ public class SysUserController {
      */
     @PreAuthorize("hasAnyAuthority('vip','sysUser')")
     @ApiOperation(value = "删除（停用）用户", httpMethod = "POST")
-    @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "用户ID", dataType = "int")})
+    @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "用户ID", dataType = "int", example = "1")})
     @PostMapping("/deleteUser")
     public ResponseResult deleteUser(int id) {
         return sysUserService.deleteUser(id);
@@ -64,7 +64,7 @@ public class SysUserController {
      */
     @PreAuthorize("hasAnyAuthority('vip','sysUser')")
     @ApiOperation(value = "修改用户信息（密码）", httpMethod = "POST")
-    @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "用户ID", dataType = "int"),
+    @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "用户ID", dataType = "int", example = "1"),
             @ApiImplicitParam(name = "password", value = "用户密码", dataType = "String")})
     @PostMapping("/updateUser")
     public ResponseResult updateUser(int id, String password) {
@@ -82,8 +82,8 @@ public class SysUserController {
     @ApiOperation(value = "查询用户列表", httpMethod = "GET")
     @ApiImplicitParams({@ApiImplicitParam(name = "username", value = "用户名", dataType = "String"),
             @ApiImplicitParam(name = "creatorName", value = "创建人名称", dataType = "String"),
-            @ApiImplicitParam(name = "page", value = "当前页数", dataType = "int"),
-            @ApiImplicitParam(name = "size", value = "每页个数", dataType = "int")})
+            @ApiImplicitParam(name = "page", value = "当前页数", dataType = "int", example = "1"),
+            @ApiImplicitParam(name = "size", value = "每页个数", dataType = "int", example = "10")})
     @GetMapping("/getUserListByParams")
     public ResponseResult getUserListByParams(String username, String creatorName, int page, int size) {
         return sysUserService.getUserListByParams(username, creatorName, page, size);
