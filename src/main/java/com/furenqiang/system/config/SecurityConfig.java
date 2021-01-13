@@ -42,19 +42,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //shiro路径下所有人都可以访问，security只有vip可以访问
         http.
                 httpBasic()
+                .and().authorizeRequests().antMatchers("/login").permitAll()
+                .and().exceptionHandling()
                 .authenticationEntryPoint((request, response, authException) -> {
                     response.setStatus(ResponseEnum.NOTLOGIN.getCode()); //
                     response.setContentType("application/json;charset=UTF-8");
-                    response.getWriter().append("{\"code\":" + ResponseEnum.NOTLOGIN.getCode() + ",\"msg\":\"" + ResponseEnum.NOTLOGIN.getMessage() + "\",\"data\":\"success\"}");
+                    response.getWriter().append("{\"code\":" + ResponseEnum.NOTLOGIN.getCode() + ",\"message\":\"" + ResponseEnum.NOTLOGIN.getMessage() + "\",\"data\":\"success\"}");
                 })
-                .and()
-                .exceptionHandling()
                 .accessDeniedHandler((request, response, ex) -> {
                     response.setStatus(ResponseEnum.NOTROLE.getCode()); //
                     response.setContentType("application/json;charset=UTF-8");
-                    response.getWriter().append("{\"code\":" + ResponseEnum.NOTROLE.getCode() + " ,\"msg\":\"" + ResponseEnum.NOTROLE.getMessage() + "\",\"data\":\"success\"}");
+                    response.getWriter().append("{\"code\":" + ResponseEnum.NOTROLE.getCode() + " ,\"message\":\"" + ResponseEnum.NOTROLE.getMessage() + "\",\"data\":\"success\"}");
                 })
-                .and().authorizeRequests().antMatchers("/login").permitAll()
+                .and().authorizeRequests()
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/webjars/**").permitAll()
                 .antMatchers("/v2/**").permitAll()
@@ -78,21 +78,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     //用户信息存session
                     request.getSession().setAttribute("userInfo", principal);
                     //logger.info("用户" + currentUser + "登录成功");
-                    response.setStatus(200);
+                    response.setStatus(ResponseEnum.SUCCESS.getCode());
                     response.setContentType("application/json;charset=UTF-8");
-                    response.getWriter().append("{\"code\":0,\"msg\":\"登录成功!\",\"data\":\"当前登录用户为:" + currentUser + "\"}");
+                    response.getWriter().append("{\"code\":" + ResponseEnum.SUCCESS.getCode() + ",\"message\":\"登录成功!\",\"data\":\"当前登录用户为:" + currentUser + "\"}");
                 })// 登录成功后走的自定义处理
                 .failureHandler((request, response, ex) -> {
                     //logger.info("登录失败");
-                    response.setStatus(403); // 403 普通用户访问管理员页面
+                    response.setStatus(ResponseEnum.SUCCESS.getCode()); // 403 普通用户访问管理员页面
                     response.setContentType("application/json;charset=UTF-8");
-                    response.getWriter().append("{\"code\":1,\"msg\":\"登录失败,用户名或密码不正确!\",\"data\":\"failed\"}");
+                    response.getWriter().append("{\"code\":" + ResponseEnum.ERROR.getCode() + ",\"message\":\"登录失败,用户名或密码不正确!\",\"data\":\"failed\"}");
                 });// 登录失败后走的自定义处理
         http.logout().logoutSuccessHandler((request, response, authentication) -> {
             //logger.info("登出成功");
-            response.setStatus(200); //
+            response.setStatus(ResponseEnum.SUCCESS.getCode()); //
             response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().append("{\"code\":0,\"msg\":\"登出成功!\",\"data\":\"success\"}");
+            response.getWriter().append("{\"code\":" + ResponseEnum.SUCCESS.getCode() + ",\"message\":\"登出成功!\",\"data\":\"success\"}");
         });
     }
 
