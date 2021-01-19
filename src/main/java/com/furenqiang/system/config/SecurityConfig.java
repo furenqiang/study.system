@@ -1,6 +1,8 @@
 package com.furenqiang.system.config;
 
+import com.alibaba.fastjson.JSONObject;
 import com.furenqiang.system.common.ResponseEnum;
+import com.furenqiang.system.entity.SysUser;
 import com.furenqiang.system.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -45,12 +47,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().authorizeRequests().antMatchers("/login").permitAll()
                 .and().exceptionHandling()
                 .authenticationEntryPoint((request, response, authException) -> {
-                    response.setStatus(ResponseEnum.NOTLOGIN.getCode()); //
+                    response.setStatus(ResponseEnum.SUCCESS.getCode()); //
                     response.setContentType("application/json;charset=UTF-8");
                     response.getWriter().append("{\"code\":" + ResponseEnum.NOTLOGIN.getCode() + ",\"message\":\"" + ResponseEnum.NOTLOGIN.getMessage() + "\",\"data\":\"success\"}");
                 })
                 .accessDeniedHandler((request, response, ex) -> {
-                    response.setStatus(ResponseEnum.NOTROLE.getCode()); //
+                    response.setStatus(ResponseEnum.SUCCESS.getCode()); //
                     response.setContentType("application/json;charset=UTF-8");
                     response.getWriter().append("{\"code\":" + ResponseEnum.NOTROLE.getCode() + " ,\"message\":\"" + ResponseEnum.NOTROLE.getMessage() + "\",\"data\":\"success\"}");
                 })
@@ -74,13 +76,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     //获取当前用户名称
                     String currentUser = authentication.getName();
                     //获取用户信息
-                    Object principal = authentication.getPrincipal();
+                    SysUser principal = (SysUser) authentication.getPrincipal();
                     //用户信息存session
                     request.getSession().setAttribute("userInfo", principal);
                     //logger.info("用户" + currentUser + "登录成功");
                     response.setStatus(ResponseEnum.SUCCESS.getCode());
                     response.setContentType("application/json;charset=UTF-8");
-                    response.getWriter().append("{\"code\":" + ResponseEnum.SUCCESS.getCode() + ",\"message\":\"登录成功!\",\"data\":\"当前登录用户为:" + currentUser + "\"}");
+                    response.getWriter().append("{\"code\":" + ResponseEnum.SUCCESS.getCode() + ",\"message\":\"登录成功!\",\"data\":" + JSONObject.toJSONString(principal) + "}");
                 })// 登录成功后走的自定义处理
                 .failureHandler((request, response, ex) -> {
                     //logger.info("登录失败");

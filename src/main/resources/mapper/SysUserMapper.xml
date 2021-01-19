@@ -16,18 +16,18 @@
     <insert id="registerUser" parameterType="com.furenqiang.system.entity.SysUser">
         insert into sys_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="username != null">
+            <if test="username != null and username != ''">
                 username,
             </if>
-            <if test="password != null">
+            <if test="password != null and password != ''">
                 password,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="username != null">
+            <if test="username != null and username != ''">
                 #{username,jdbcType=VARCHAR},
             </if>
-            <if test="password != null">
+            <if test="password != null and password != ''">
                 #{password,jdbcType=VARCHAR},
             </if>
         </trim>
@@ -37,21 +37,22 @@
         SELECT
         *
         FROM
-        sys_user su
+        sys_user AS su
         WHERE
         su.STATUS = 1
-        <if test="username != null">
-            and c.username like concat(concat('%',#{username,jdbcType=VARCHAR}),'%')
+        <if test="username != null and username != ''">
+            and su.username like concat(concat('%',#{username,jdbcType=VARCHAR}),'%')
         </if>
-        <if test="creatorName != null">
-            and c.creatorName like concat(concat('%',#{creatorName,jdbcType=VARCHAR}),'%')
+        <if test="creatorName != null and creatorName != ''">
+            and su.creatorName like concat(concat('%',#{creatorName,jdbcType=VARCHAR}),'%')
         </if>
+        ORDER BY su.id
     </select>
 
     <update id="changeStatus" parameterType="com.furenqiang.system.entity.SysUser">
         update sys_user
         <set>
-            <if test="status != null">
+            <if test="status != null and status != ''">
                 status = #{status,jdbcType=INTEGER},
             </if>
         </set>
@@ -61,7 +62,7 @@
     <update id="updateUser" parameterType="com.furenqiang.system.entity.SysUser">
         update sys_user
         <set>
-            <if test="password != null">
+            <if test="password != null and password != ''">
                 password = #{password,jdbcType=INTEGER},
             </if>
         </set>
