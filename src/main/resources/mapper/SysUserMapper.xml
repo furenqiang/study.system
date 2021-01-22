@@ -5,12 +5,14 @@
         <result column="id" property="id" jdbcType="INTEGER" />
         <result column="username" property="username" jdbcType="VARCHAR" />
         <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="creatorId" property="creatorId" jdbcType="VARCHAR" />
+        <result column="creatorName" property="creatorName" jdbcType="VARCHAR" />
         <result column="status" property="status" jdbcType="INTEGER" />
         <result column="creatTime" property="creatTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
     <sql id="Base_Column_List">
-		id,username,password,status,creatTime
+		id,username,password,status,creatTime,creatorId,creatorName
 	</sql>
 
     <insert id="registerUser" parameterType="com.furenqiang.system.entity.SysUser">
@@ -22,6 +24,12 @@
             <if test="password != null and password != ''">
                 password,
             </if>
+            <if test="creatorId != null and creatorId != ''">
+                creatorId,
+            </if>
+            <if test="creatorName != null and creatorName != ''">
+                creatorName,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="username != null and username != ''">
@@ -29,6 +37,12 @@
             </if>
             <if test="password != null and password != ''">
                 #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="creatorId != null and creatorId != ''">
+                #{creatorId,jdbcType=INTEGER},
+            </if>
+            <if test="creatorName != null and creatorName != ''">
+                #{creatorName,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>

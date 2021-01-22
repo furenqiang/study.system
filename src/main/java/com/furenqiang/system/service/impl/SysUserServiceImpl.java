@@ -42,7 +42,7 @@ public class SysUserServiceImpl implements SysUserService {
         if (null == password || "".equals(password)) {
             password = "123456";
         }
-        int insert = sysUserMapper.registerUser(username, BCrypt.hashpw(password, BCrypt.gensalt()));
+        int insert = sysUserMapper.registerUser(username, BCrypt.hashpw(password, BCrypt.gensalt()), creatorId, creatorName);
         if (insert > 0) {
             return new ResponseResult(ResponseEnum.SUCCESS.getCode(), "添加用户" + username + "成功！", ResponseEnum.SUCCESS.getMessage());
         }
