@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.furenqiang.system.mapper.SysLogMapper">
+    <resultMap id="BaseResultMap" type="com.furenqiang.system.entity.SysLog">
+        <result column="id" property="id" jdbcType="INTEGER" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="operation" property="operation" jdbcType="VARCHAR" />
+        <result column="time" property="time" jdbcType="INTEGER" />
+        <result column="method" property="method" jdbcType="VARCHAR" />
+        <result column="params" property="params" jdbcType="VARCHAR" />
+        <result column="ip" property="ip" jdbcType="VARCHAR" />
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		id,username,operation,time,method,params,ip,createTime
+	</sql>
+
+    <insert id="addSysLog" parameterType="com.furenqiang.system.entity.SysLog" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into sys_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null and username != ''">
+                username,
+            </if>
+            <if test="operation != null and operation != ''">
+                operation,
+            </if>
+            <if test="time != null and time != ''">
+                time,
+            </if>
+            <if test="method != null and method != ''">
+                method,
+            </if>
+            <if test="params != null and params != ''">
+                params,
+            </if>
+            <if test="ip != null and ip != ''">
+                ip,
+            </if>
+            <if test="createTime != null">
+                createTime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null and username != ''">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="operation != null and operation != ''">
+                #{operation,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null and time != ''">
+                #{time,jdbcType=INTEGER},
+            </if>
+            <if test="method != null and method != ''">
+                #{method,jdbcType=VARCHAR},
+            </if>
+            <if test="params != null and params != ''">
+                #{params,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null and ip != ''">
+                #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="getLogListByParams" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        sys_log AS sl
+        WHERE
+        1 = 1
+        <if test="username != null and username != ''">
+            and sl.username like concat(concat('%',#{username,jdbcType=VARCHAR}),'%')
+        </if>
+        <if test="operation != null and operation != ''">
+            and sl.operation like concat(concat('%',#{operation,jdbcType=VARCHAR}),'%')
+        </if>
+        <if test="ip != null and ip != ''">
+            and sl.ip like concat(concat('%',#{ip,jdbcType=VARCHAR}),'%')
+        </if>
+        <if test="orderField != null">
+            ORDER BY
+            <if test="orderField == 1">
+                sl.time
+            </if>
+            <if test="orderField == 2">
+                sl.createTime
+            </if>
+            <if test="orderType != null">
+                <if test="orderType == 2">
+                    DESC
+                </if>
+            </if>
+        </if>
+    </select>
+
+    <!--<update id="changeStatus" parameterType="com.furenqiang.system.entity.SysUser">-->
+        <!--update sys_user-->
+        <!--<set>-->
+            <!--<if test="status != null and status != ''">-->
+                <!--status = #{status,jdbcType=INTEGER},-->
+            <!--</if>-->
+        <!--</set>-->
+        <!--where id = #{id,jdbcType=INTEGER}-->
+    <!--</update>-->
+
+    <!--<update id="updateUser" parameterType="com.furenqiang.system.entity.SysUser">-->
+        <!--update sys_user-->
+        <!--<set>-->
+            <!--<if test="password != null and password != ''">-->
+                <!--password = #{password,jdbcType=INTEGER},-->
+            <!--</if>-->
+        <!--</set>-->
+        <!--where id = #{id,jdbcType=INTEGER}-->
+    <!--</update>-->
+
+    <!--<select id="getUserListByParams" resultMap="BaseResultMap">-->
+    <!--SELECT-->
+    <!--su.username,-->
+    <!--su.PASSWORD,-->
+    <!--group_concat(sr.rolename) AS rolename,-->
+    <!--group_concat(sr.roledesc) AS roledesc-->
+    <!--FROM-->
+    <!--sys_user su,-->
+    <!--sys_user_role sur,-->
+    <!--sys_role sr-->
+    <!--WHERE-->
+    <!--su.STATUS = 1-->
+    <!--<if test="status != null">-->
+    <!--and c.status=#{status,jdbcType=DECIMAL}-->
+    <!--</if>-->
+    <!--AND su.id = sur.uid-->
+    <!--AND sur.rid = sr.id-->
+    <!--GROUP BY username-->
+    <!--</select>-->
+
+</mapper>

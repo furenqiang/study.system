@@ -1,6 +1,6 @@
 package com.furenqiang.system.config;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -19,16 +19,20 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 //swagger2的配置文件，在项目的启动类的同级文件建立
 @Configuration
 @EnableSwagger2
+//@Profile({"dev","test"})//使用注解@Profile({“dev”,“test”})表示在开发或测试环境开启，而在生产关闭。（推荐使用）---自测无效
 //是否开启swagger，正式环境一般是需要关闭的（避免不必要的漏洞暴露！），可根据springboot的多环境配置进行设置
-@ConditionalOnProperty(name = "swagger.enable", havingValue = "true")
+//@ConditionalOnProperty(name = "swagger.enable", havingValue = "true")//自测无效
 public class SwaggerConfig {
+
+    @Value("${swagger.enable}")
+    private Boolean enable;
     // swagger2的配置文件，这里可以配置swagger2的一些基本的内容，比如扫描的包等等
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select()
                 // 为当前包路径
                 .apis(RequestHandlerSelectors.basePackage("com.furenqiang.system.controller"))
-                .paths(PathSelectors.any()).build();
+                .paths(PathSelectors.any()).build().enable(enable);
     }
 
     // 构建 api文档的详细信息函数,注意这里的注解引用的是哪个

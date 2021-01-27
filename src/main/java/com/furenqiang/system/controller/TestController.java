@@ -1,5 +1,6 @@
 package com.furenqiang.system.controller;
 
+import com.furenqiang.system.aop.Log;
 import com.furenqiang.system.entity.Test;
 import com.furenqiang.system.service.TestService;
 import io.swagger.annotations.Api;
@@ -24,10 +25,11 @@ public class TestController {
 
     /**
      * @return
-     * @Description 测试接口
+     * @Description 测试接口,用来路由跳转后判断是否登录
      * @Time 2020年12月2日
      * @Author Eric
      */
+    //@Log("测试接口http请求")
     @ApiOperation(value = "测试接口http请求", httpMethod = "GET")
     @ApiImplicitParams({@ApiImplicitParam(name = "param", value = "参数", dataType = "String")})
     @GetMapping("/testHttp")
@@ -41,6 +43,7 @@ public class TestController {
      * @Time 2020年12月2日
      * @Author Eric
      */
+    @Log("测试查询数据库")
     @PreAuthorize("hasAnyAuthority('vip','select')")
     @ApiOperation(value = "测试查询数据库", httpMethod = "GET")
     @GetMapping("/getTest")

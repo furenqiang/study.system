@@ -91,6 +91,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     response.getWriter().append("{\"code\":" + ResponseEnum.ERROR.getCode() + ",\"message\":\"登录失败,用户名或密码不正确!\",\"data\":\"failed\"}");
                 });// 登录失败后走的自定义处理
         http.logout().logoutSuccessHandler((request, response, authentication) -> {
+            //删除session的用户信息
+            request.getSession().removeAttribute("userInfo");
             //logger.info("登出成功");
             response.setStatus(ResponseEnum.SUCCESS.getCode()); //
             response.setContentType("application/json;charset=UTF-8");

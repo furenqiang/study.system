@@ -20,11 +20,13 @@ public interface SysUserMapper {
     public SysUser findByName(String username);
 
 
-    int registerUser(@Param("username") String username, @Param("password") String password, @Param("creatorId") Integer creatorId, @Param("creatorName") String creatorName);
+    int registerUser(SysUser sysUser);
 
     List<SysUser> getUserListByParams(@Param("username") String username, @Param("creatorName") String creatorName);
 
     int changeStatus(@Param("id") int id, @Param("status") int status);
 
     int updateUser(@Param("id") int id, @Param("password") String password);
+
+    int addSelectRole(@Param("uid") Integer uid);
 }

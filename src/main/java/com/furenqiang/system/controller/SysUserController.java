@@ -1,5 +1,6 @@
 package com.furenqiang.system.controller;
 
+import com.furenqiang.system.aop.Log;
 import com.furenqiang.system.common.ResponseResult;
 import com.furenqiang.system.entity.SysUser;
 import com.furenqiang.system.service.SysUserService;
@@ -30,6 +31,7 @@ public class SysUserController {
      * @Time 2020年12月4日
      * @Author Eric
      */
+    @Log("注册（添加）用户")
     @PreAuthorize("hasAnyAuthority('vip','sysUser')")
     @ApiOperation(value = "注册（添加）用户", httpMethod = "POST")
     @ApiImplicitParams({@ApiImplicitParam(name = "username", value = "用户名", dataType = "String"),
@@ -48,6 +50,7 @@ public class SysUserController {
      * @Time 2020年12月7日
      * @Author Eric
      */
+    @Log("删除（停用）用户")
     @PreAuthorize("hasAnyAuthority('vip','sysUser')")
     @ApiOperation(value = "删除（停用）用户", httpMethod = "POST")
     @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "用户ID", dataType = "int", example = "1")})
@@ -58,10 +61,11 @@ public class SysUserController {
 
     /**
      * @return
-     * @Description 删除（停用）用户
+     * @Description 修改用户信息（密码）
      * @Time 2020年12月7日
      * @Author Eric
      */
+    @Log("修改用户信息（密码）")
     @PreAuthorize("hasAnyAuthority('vip','sysUser')")
     @ApiOperation(value = "修改用户信息（密码）", httpMethod = "POST")
     @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "用户ID", dataType = "int", example = "1"),
@@ -78,6 +82,7 @@ public class SysUserController {
      * @Time 2020年12月4日
      * @Author Eric
      */
+    //@Log("查询用户列表")
     @PreAuthorize("hasAnyAuthority('vip','sysUser')")
     @ApiOperation(value = "查询用户列表", httpMethod = "GET")
     @ApiImplicitParams({@ApiImplicitParam(name = "username", value = "用户名", dataType = "String"),

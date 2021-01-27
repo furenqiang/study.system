@@ -42,9 +42,17 @@ public class SysUserServiceImpl implements SysUserService {
         if (null == password || "".equals(password)) {
             password = "123456";
         }
-        int insert = sysUserMapper.registerUser(username, BCrypt.hashpw(password, BCrypt.gensalt()), creatorId, creatorName);
+        SysUser sysUser=new SysUser(username, BCrypt.hashpw(password, BCrypt.gensalt()), creatorId, creatorName);
+        int insert = sysUserMapper.registerUser(sysUser);
         if (insert > 0) {
-            return new ResponseResult(ResponseEnum.SUCCESS.getCode(), "添加用户" + username + "成功！", ResponseEnum.SUCCESS.getMessage());
+            //给新建的用户自动添加查询权限
+            int i = sysUserMapper.addSelectRole(sysUser.getId());
+            if(i>0){
+                return new ResponseResult(ResponseEnum.SUCCESS.getCode(), "添加用户" + username + "成功！", ResponseEnum.SUCCESS.getMessage());
+            }else {
+                return new ResponseResult(ResponseEnum.SUCCESS.getCode(), "添加用户" + username + "成功！授予查询权限失败！",
+                        ResponseEnum.SUCCESS.getMessage());
+            }
         }
         return new ResponseResult(ResponseEnum.ERROR.getCode(), "添加用户" + username + "失败！", ResponseEnum.ERROR.getMessage());
     }

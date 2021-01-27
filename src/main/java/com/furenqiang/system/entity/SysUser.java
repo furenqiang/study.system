@@ -125,4 +125,14 @@ public class SysUser implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public SysUser() {
+    }
+
+    public SysUser(String username, String password,Integer creatorId,String creatorName) {
+        this.username = username;
+        this.password = password;
+        this.creatorId = creatorId;
+        this.creatorName = creatorName;
+    }
 }

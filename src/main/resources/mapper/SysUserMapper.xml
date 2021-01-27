@@ -15,7 +15,7 @@
 		id,username,password,status,creatTime,creatorId,creatorName
 	</sql>
 
-    <insert id="registerUser" parameterType="com.furenqiang.system.entity.SysUser">
+    <insert id="registerUser" parameterType="com.furenqiang.system.entity.SysUser" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into sys_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="username != null and username != ''">
@@ -83,24 +83,19 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
-    <!--<select id="getUserListByParams" resultMap="BaseResultMap">-->
-    <!--SELECT-->
-    <!--su.username,-->
-    <!--su.PASSWORD,-->
-    <!--group_concat(sr.rolename) AS rolename,-->
-    <!--group_concat(sr.roledesc) AS roledesc-->
-    <!--FROM-->
-    <!--sys_user su,-->
-    <!--sys_user_role sur,-->
-    <!--sys_role sr-->
-    <!--WHERE-->
-    <!--su.STATUS = 1-->
-    <!--<if test="status != null">-->
-    <!--and c.status=#{status,jdbcType=DECIMAL}-->
-    <!--</if>-->
-    <!--AND su.id = sur.uid-->
-    <!--AND sur.rid = sr.id-->
-    <!--GROUP BY username-->
-    <!--</select>-->
-
+    <insert id="addSelectRole" parameterType="java.lang.Integer">
+        insert into sys_user_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            rid
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=INTEGER},
+            </if>
+            ( SELECT id FROM sys_role WHERE rolename = 'select' )
+        </trim>
+    </insert>
 </mapper>

@@ -1,5 +1,6 @@
 package com.furenqiang.system.controller;
 
+import com.furenqiang.system.aop.Log;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -20,6 +21,7 @@ public class LoginController {
      * @Time 2020年12月2日
      * @Author Eric
      */
+    @Log("登录请求")
     @ApiOperation(value = "登录请求", httpMethod = "POST")
     @ApiImplicitParams({@ApiImplicitParam(name = "username", value = "用户名", dataType = "String"),
             @ApiImplicitParam(name = "password", value = "密码", dataType = "String")})
@@ -34,6 +36,7 @@ public class LoginController {
      * @Time 2020年12月2日
      * @Author Eric
      */
+    @Log("登出请求")
     @ApiOperation(value = "登出请求", httpMethod = "GET")
     @GetMapping("/logout")
     public String logout() {
