@@ -77,7 +77,6 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public ResponseResult deleteUser(int id) {
         int i = sysUserMapper.changeStatus(id, 0);
-        ResponseResult responseResult = new ResponseResult();
         if (i > 0) {
             return new ResponseResult(ResponseEnum.SUCCESS.getCode(), ResponseEnum.SUCCESS.getMessage());
         } else {

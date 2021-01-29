@@ -26,7 +26,7 @@ public class SysUser implements UserDetails {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") // 前端时间字符串转java时间戳
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8") // 后台时间戳转前端时间字符串(json对象)
-    private Date creatTime;
+    private Date createTime;
 
     private List<SysRole> roles;
 
@@ -80,12 +80,12 @@ public class SysUser implements UserDetails {
         this.creatorName = creatorName;
     }
 
-    public Date getCreatTime() {
-        return creatTime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatTime(Date creatTime) {
-        this.creatTime = creatTime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public List<SysRole> getRoles() {

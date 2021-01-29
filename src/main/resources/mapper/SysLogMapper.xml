@@ -40,6 +40,9 @@
             <if test="createTime != null">
                 createTime,
             </if>
+            <if test="result != null and result != ''">
+                result,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="username != null and username != ''">
@@ -62,6 +65,9 @@
             </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="result != null and result != ''">
+                #{result,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>

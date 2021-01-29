@@ -8,11 +8,11 @@
         <result column="creatorId" property="creatorId" jdbcType="VARCHAR" />
         <result column="creatorName" property="creatorName" jdbcType="VARCHAR" />
         <result column="status" property="status" jdbcType="INTEGER" />
-        <result column="creatTime" property="creatTime" jdbcType="TIMESTAMP" />
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
     <sql id="Base_Column_List">
-		id,username,password,status,creatTime,creatorId,creatorName
+		id,username,password,status,createTime,creatorId,creatorName
 	</sql>
 
     <insert id="registerUser" parameterType="com.furenqiang.system.entity.SysUser" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
@@ -66,7 +66,7 @@
     <update id="changeStatus" parameterType="com.furenqiang.system.entity.SysUser">
         update sys_user
         <set>
-            <if test="status != null and status != ''">
+            <if test="status != null">
                 status = #{status,jdbcType=INTEGER},
             </if>
         </set>

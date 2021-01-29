@@ -59,11 +59,11 @@ public class LogAspect {
         // 执行时长(毫秒)
         long time = System.currentTimeMillis() - beginTime;
         // 保存日志
-        saveLog(point, time);
+        saveLog(point, time, result);
         return result;
     }
 
-    private void saveLog(ProceedingJoinPoint joinPoint, long time) {
+    private void saveLog(ProceedingJoinPoint joinPoint, long time,Object result) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         SysLog sysLog = new SysLog();
@@ -88,6 +88,7 @@ public class LogAspect {
         sysLog.setUsername(userInfo.getUsername());
         sysLog.setTime((int) time);
         sysLog.setCreateTime(new Date());
+        sysLog.setResult(JSON.toJSONString(result));
         // 保存系统日志
         sysLogMapper.addSysLog(sysLog);
     }

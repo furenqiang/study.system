@@ -1,16 +1,30 @@
 package com.furenqiang.system.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
 public class SysLog implements Serializable {
     private Integer id;
+
     private String username;
+
     private String operation;
+
     private Integer time;
+
     private String method;
+
     private String params;
+
     private String ip;
+
+    private String result;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") // 前端时间字符串转java时间戳
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8") // 后台时间戳转前端时间字符串(json对象)
     private Date createTime;
 
     public Integer getId() {
@@ -75,5 +89,13 @@ public class SysLog implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 }
