@@ -163,7 +163,7 @@
         GROUP BY
             DATE_FORMAT( sel.createTime, '%Y-%m-%d' )
         ORDER BY
-            sel.createTime DESC
+            DATE_FORMAT( sel.createTime, '%Y-%m-%d' )
             LIMIT 0,7
     </select>
 
@@ -176,7 +176,7 @@
         GROUP BY
             sel.excName
         ORDER BY
-            sel.createTime DESC
+            num
         LIMIT 0,3
     </select>
 
