@@ -13,6 +13,19 @@
         <result column="ip" property="ip" jdbcType="VARCHAR" />
         <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
+    <resultMap id="BaseResultVOMap" type="com.furenqiang.system.vo.SysExceptionLogCountVO">
+        <result column="id" property="id" jdbcType="INTEGER" />
+        <result column="params" property="params" jdbcType="VARCHAR" />
+        <result column="method" property="method" jdbcType="VARCHAR" />
+        <result column="excName" property="excName" jdbcType="VARCHAR" />
+        <result column="excMessage" property="excMessage" jdbcType="VARCHAR" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="userId" property="userId" jdbcType="INTEGER" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="ip" property="ip" jdbcType="VARCHAR" />
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="num" property="num" jdbcType="VARCHAR" />
+    </resultMap>
 
     <sql id="Base_Column_List">
 		id,params,method,excName,excMessage,username,userId,url,ip,createTime
@@ -141,5 +154,30 @@
     <!--AND sur.rid = sr.id-->
     <!--GROUP BY username-->
     <!--</select>-->
+    <select id="countExceptByParams" resultMap="BaseResultVOMap">
+        SELECT
+            count(sel.id) AS num,
+            DATE_FORMAT( sel.createTime, '%Y-%m-%d' ) AS createTime
+        FROM
+            sys_exception_log AS sel
+        GROUP BY
+            DATE_FORMAT( sel.createTime, '%Y-%m-%d' )
+        ORDER BY
+            sel.createTime DESC
+            LIMIT 0,7
+    </select>
+
+    <select id="countExceptTop3" resultMap="BaseResultVOMap">
+        SELECT
+            count( sel.id ) AS num,
+            sel.excName AS excName
+        FROM
+            sys_exception_log AS sel
+        GROUP BY
+            sel.excName
+        ORDER BY
+            sel.createTime DESC
+        LIMIT 0,3
+    </select>
 
 </mapper>

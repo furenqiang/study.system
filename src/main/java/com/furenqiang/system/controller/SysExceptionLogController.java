@@ -41,4 +41,34 @@ public class SysExceptionLogController {
         return sysExceptionLogService.getExceptionLogListByParams(username, excName, method, ip, page, size);
     }
 
+    /**
+     * @return
+     * @Description 统计近七天的异常数
+     * @Params
+     * @Time 2021年2月4日
+     * @Author Eric
+     */
+    //@Log("统计近七天的异常数")
+    @PreAuthorize("hasAnyAuthority('vip','sysUser','select')")
+    @ApiOperation(value = "统计近七天的异常数", httpMethod = "GET")
+    //@ApiImplicitParams({@ApiImplicitParam(name = "username", value = "操作人", dataType = "String")})
+    @GetMapping("/countExceptByParams")
+    public ResponseResult countExceptByParams() {
+        return sysExceptionLogService.countExceptByParams();
+    }
+
+    /**
+     * @return
+     * @Description 异常类型次数top3
+     * @Params
+     * @Time 2021年2月4日
+     * @Author Eric
+     */
+    //@Log("异常类型次数top3")
+    @PreAuthorize("hasAnyAuthority('vip','sysUser','select')")
+    @ApiOperation(value = "异常类型次数top3", httpMethod = "GET")
+    @GetMapping("/countExceptTop3")
+    public ResponseResult countExceptTop3() {
+        return sysExceptionLogService.countExceptTop3();
+    }
 }

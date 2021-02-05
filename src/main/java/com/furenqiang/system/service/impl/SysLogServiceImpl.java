@@ -5,6 +5,7 @@ import com.furenqiang.system.common.ResponseResult;
 import com.furenqiang.system.entity.SysLog;
 import com.furenqiang.system.mapper.SysLogMapper;
 import com.furenqiang.system.service.SysLogService;
+import com.furenqiang.system.vo.SysLogCountVO;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,17 @@ public class SysLogServiceImpl implements SysLogService {
         responseResult.setMessage(ResponseEnum.SUCCESS.getMessage());
         responseResult.setData(pageInfo.getList());
         responseResult.setTotal(pageInfo.getTotal());
+        return responseResult;
+    }
+
+    @Override
+    public ResponseResult countTimeByParams() {
+        //统计近七天每天的请求总时长
+        List<SysLogCountVO> sysLogs = sysLogMapper.countTimeByParams();
+        ResponseResult responseResult = new ResponseResult();
+        responseResult.setCode(ResponseEnum.SUCCESS.getCode());
+        responseResult.setMessage(ResponseEnum.SUCCESS.getMessage());
+        responseResult.setData(sysLogs);
         return responseResult;
     }
 }

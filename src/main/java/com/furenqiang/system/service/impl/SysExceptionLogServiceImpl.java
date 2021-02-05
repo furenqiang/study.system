@@ -5,6 +5,7 @@ import com.furenqiang.system.common.ResponseResult;
 import com.furenqiang.system.entity.SysExceptionLog;
 import com.furenqiang.system.mapper.SysExceptionLogMapper;
 import com.furenqiang.system.service.SysExceptionLogService;
+import com.furenqiang.system.vo.SysExceptionLogCountVO;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,28 @@ public class SysExceptionLogServiceImpl implements SysExceptionLogService {
         responseResult.setMessage(ResponseEnum.SUCCESS.getMessage());
         responseResult.setData(pageInfo.getList());
         responseResult.setTotal(pageInfo.getTotal());
+        return responseResult;
+    }
+
+    @Override
+    public ResponseResult countExceptByParams() {
+        //统计近七次每天的异常数
+        List<SysExceptionLogCountVO> sysExceptionLogs = sysExceptionLogMapper.countExceptByParams();
+        ResponseResult responseResult = new ResponseResult();
+        responseResult.setCode(ResponseEnum.SUCCESS.getCode());
+        responseResult.setMessage(ResponseEnum.SUCCESS.getMessage());
+        responseResult.setData(sysExceptionLogs);
+        return responseResult;
+    }
+
+    @Override
+    public ResponseResult countExceptTop3() {
+        //统计异常类型TOP3
+        List<SysExceptionLogCountVO> sysExceptionLogs = sysExceptionLogMapper.countExceptTop3();
+        ResponseResult responseResult = new ResponseResult();
+        responseResult.setCode(ResponseEnum.SUCCESS.getCode());
+        responseResult.setMessage(ResponseEnum.SUCCESS.getMessage());
+        responseResult.setData(sysExceptionLogs);
         return responseResult;
     }
 }

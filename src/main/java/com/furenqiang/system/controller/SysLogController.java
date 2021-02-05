@@ -39,7 +39,23 @@ public class SysLogController {
             @ApiImplicitParam(name = "size", value = "每页个数", dataType = "int", example = "10")})
     @GetMapping("/getLogListByParams")
     public ResponseResult getLogListByParams(String username, String operation, String ip, Integer orderField,
-                                           Integer orderType, int page, int size) {
+                                             Integer orderType, int page, int size) {
         return sysLogService.getLogListByParams(username, operation, ip, orderField, orderType, page, size);
+    }
+
+    /**
+     * @return
+     * @Description 统计请求所用时长
+     * @Params
+     * @Time 2021年1月29日
+     * @Author Eric
+     */
+    //@Log("查询系统日志列表")
+    @PreAuthorize("hasAnyAuthority('vip','sysUser','select')")
+    @ApiOperation(value = "统计请求所用时长", httpMethod = "GET")
+    //@ApiImplicitParams({@ApiImplicitParam(name = "username", value = "操作人", dataType = "String")})
+    @GetMapping("/countTimeByParams")
+    public ResponseResult countTimeByParams() {
+        return sysLogService.countTimeByParams();
     }
 }

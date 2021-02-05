@@ -11,6 +11,16 @@
         <result column="ip" property="ip" jdbcType="VARCHAR" />
         <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
+    <resultMap id="BaseResultVOMap" type="com.furenqiang.system.vo.SysLogCountVO">
+        <result column="id" property="id" jdbcType="INTEGER" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="operation" property="operation" jdbcType="VARCHAR" />
+        <result column="time" property="time" jdbcType="INTEGER" />
+        <result column="method" property="method" jdbcType="VARCHAR" />
+        <result column="params" property="params" jdbcType="VARCHAR" />
+        <result column="ip" property="ip" jdbcType="VARCHAR" />
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
 
     <sql id="Base_Column_List">
 		id,username,operation,time,method,params,ip,createTime
@@ -124,24 +134,16 @@
         <!--where id = #{id,jdbcType=INTEGER}-->
     <!--</update>-->
 
-    <!--<select id="getUserListByParams" resultMap="BaseResultMap">-->
-    <!--SELECT-->
-    <!--su.username,-->
-    <!--su.PASSWORD,-->
-    <!--group_concat(sr.rolename) AS rolename,-->
-    <!--group_concat(sr.roledesc) AS roledesc-->
-    <!--FROM-->
-    <!--sys_user su,-->
-    <!--sys_user_role sur,-->
-    <!--sys_role sr-->
-    <!--WHERE-->
-    <!--su.STATUS = 1-->
-    <!--<if test="status != null">-->
-    <!--and c.status=#{status,jdbcType=DECIMAL}-->
-    <!--</if>-->
-    <!--AND su.id = sur.uid-->
-    <!--AND sur.rid = sr.id-->
-    <!--GROUP BY username-->
-    <!--</select>-->
+    <select id="countTimeByParams" resultMap="BaseResultVOMap">
+        SELECT
+            sum( sl.time ) AS time,
+            DATE_FORMAT( sl.createTime, '%Y-%m-%d' ) AS createTime
+        FROM
+            sys_log AS sl
+        GROUP BY
+            DATE_FORMAT(sl.createTime,'%Y-%m-%d')
+        ORDER BY sl.createTime DESC
+	    LIMIT 0,7
+    </select>
 
 </mapper>
