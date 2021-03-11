@@ -93,6 +93,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.logout().logoutSuccessHandler((request, response, authentication) -> {
             //删除session的用户信息
             request.getSession().removeAttribute("userInfo");
+            //删除session的左侧菜单树信息
+            request.getSession().removeAttribute("menuTree");
             //logger.info("登出成功");
             response.setStatus(ResponseEnum.SUCCESS.getCode()); //
             response.setContentType("application/json;charset=UTF-8");

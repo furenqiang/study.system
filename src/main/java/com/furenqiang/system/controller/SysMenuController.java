@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/sysMenu")
 @Api(tags = "菜单相关功能")
@@ -30,7 +32,15 @@ public class SysMenuController {
     @ApiOperation(value = "获取菜单树", httpMethod = "GET")
     //@ApiImplicitParams({@ApiImplicitParam(name = "username", value = "操作人", dataType = "String")})
     @GetMapping("/getMenuTree")
-    public ResponseResult getMenuTree() {
-        return sysMenuService.getMenuTree();
+    public ResponseResult getMenuTree(HttpServletRequest request) {
+        //先看session是否有存，没有再去查，后面往redis存
+        ResponseResult menuTreeBySession = (ResponseResult) request.getSession().getAttribute("menuTree");
+        if(menuTreeBySession==null){
+            ResponseResult menuTree = sysMenuService.getMenuTree();
+            request.getSession().setAttribute("menuTree",menuTree);
+            return menuTree;
+        }else {
+            return menuTreeBySession;
+        }
     }
 }
