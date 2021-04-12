@@ -1,10 +1,15 @@
 package com.furenqiang.system.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 
+@TableName("sys_Role") //指定对应数据表
 public class SysRole implements GrantedAuthority {
 
+    @TableId(value = "id",type = IdType.AUTO)//指定自增策略
     private Integer id;
 
     private String roleName;

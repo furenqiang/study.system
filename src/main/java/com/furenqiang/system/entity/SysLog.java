@@ -1,14 +1,17 @@
 package com.furenqiang.system.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class SysLog implements Serializable {
-    private static final long serialVersionUID = 1L;
+@TableName("sys_log") //指定对应数据表
+public class SysLog {
 
+    @TableId(value = "id",type = IdType.AUTO)//指定自增策略
     private Integer id;
 
     private String username;
