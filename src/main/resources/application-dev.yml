@@ -49,6 +49,19 @@ eureka:
 #Swagger lock
 swagger:
   enable: true
+
+myprops:
+  fileUrl: http://127.0.0.1:8088/
+  filePath: D:\\upload\
+  unzipPath: D:\\upload\unzipFile\
+  ftpIp: 127.0.0.1
+  ftpPort: 21
+  ftpUsername: EDZ
+  ftpPassword: 123456
+  ftpPath: D:\\ftp
+  ftpUnzipPath: D:\\ftp\unzipFile\
+  ftpUnzipUrl: ftp://127.0.0.1/unzipFile/
+
   #
   #feign:
   #  httpclient:
