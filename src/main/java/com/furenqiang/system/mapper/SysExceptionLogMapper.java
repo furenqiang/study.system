@@ -1,5 +1,6 @@
 package com.furenqiang.system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.furenqiang.system.entity.SysExceptionLog;
 import com.furenqiang.system.vo.SysExceptionLogCountVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -8,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface SysExceptionLogMapper {
+public interface SysExceptionLogMapper extends BaseMapper<SysExceptionLog> {
 
     int addExceptLog(SysExceptionLog sysExceptionLog);
 

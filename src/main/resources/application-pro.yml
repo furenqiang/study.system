@@ -31,10 +31,12 @@ spring:
 #    time-zone: GMT+8
 #  main:
 #    allow-bean-definition-overriding: true
-mybatis:
+mybatis-plus:
   mapper-locations:
     - classpath:mapper/*Mapper.xml
   type-aliases-package: com.furenqiang.system.entity
+  global-config:
+    db-column-underline: true
 
 eureka:
   client:
@@ -44,6 +46,18 @@ eureka:
 #Swagger lock
 swagger:
   enable: false
+
+myprops:
+  fileUrl: http://127.0.0.1:8080/
+  filePath: /data/program/apache-tomcat-8.5.57/files/
+  unzipPath: /data/program/apache-tomcat-8.5.57/files/
+  ftpIp: 127.0.0.1
+  ftpPort: 21
+  ftpUsername: EDZ
+  ftpPassword: 123456
+  ftpPath: D:\\ftp
+  ftpUnzipPath: D:\\ftp\unzipFile\
+  ftpUnzipUrl: ftp://127.0.0.1/unzipFile/
   #
   #eureka:
   #  client:

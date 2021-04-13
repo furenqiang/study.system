@@ -1,6 +1,8 @@
 package com.furenqiang.system.controller;
 
+import com.furenqiang.system.common.ResponseEnum;
 import com.furenqiang.system.common.ResponseResult;
+import com.furenqiang.system.filter.PredicateParams;
 import com.furenqiang.system.service.SysLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -39,7 +41,10 @@ public class SysLogController {
             @ApiImplicitParam(name = "size", value = "每页个数", dataType = "int", example = "10")})
     @GetMapping("/getLogListByParams")
     public ResponseResult getLogListByParams(String username, String operation, String ip, Integer orderField,
-                                             Integer orderType, int page, int size) {
+                                             Integer orderType, Integer page, Integer size) {
+        if(new PredicateParams().predicateParam(page,size)){
+            return new ResponseResult(ResponseEnum.BADPARAM.getCode(),ResponseEnum.BADPARAM.getMessage());
+        }
         return sysLogService.getLogListByParams(username, operation, ip, orderField, orderType, page, size);
     }
 
