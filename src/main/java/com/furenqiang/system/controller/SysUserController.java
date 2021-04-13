@@ -1,8 +1,10 @@
 package com.furenqiang.system.controller;
 
 import com.furenqiang.system.aop.Log;
+import com.furenqiang.system.common.ResponseEnum;
 import com.furenqiang.system.common.ResponseResult;
 import com.furenqiang.system.entity.SysUser;
+import com.furenqiang.system.filter.PredicateParams;
 import com.furenqiang.system.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -55,7 +57,10 @@ public class SysUserController {
     @ApiOperation(value = "删除（停用）用户", httpMethod = "POST")
     @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "用户ID", dataType = "int", example = "1")})
     @PostMapping("/deleteUser")
-    public ResponseResult deleteUser(int id) {
+    public ResponseResult deleteUser(Integer id) {
+        if(new PredicateParams().predicateParam(id)){
+            return new ResponseResult(ResponseEnum.BADPARAM.getCode(),ResponseEnum.BADPARAM.getMessage());
+        }
         return sysUserService.deleteUser(id);
     }
 
@@ -71,7 +76,10 @@ public class SysUserController {
     @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "用户ID", dataType = "int", example = "1"),
             @ApiImplicitParam(name = "password", value = "用户密码", dataType = "String")})
     @PostMapping("/updateUser")
-    public ResponseResult updateUser(int id, String password) {
+    public ResponseResult updateUser(Integer id, String password) {
+        if(new PredicateParams().predicateParam(id,password)){
+            return new ResponseResult(ResponseEnum.BADPARAM.getCode(),ResponseEnum.BADPARAM.getMessage());
+        }
         return sysUserService.updateUser(id, password);
     }
 
@@ -90,7 +98,10 @@ public class SysUserController {
             @ApiImplicitParam(name = "page", value = "当前页数", dataType = "int", example = "1"),
             @ApiImplicitParam(name = "size", value = "每页个数", dataType = "int", example = "10")})
     @GetMapping("/getUserListByParams")
-    public ResponseResult getUserListByParams(String username, String creatorName, int page, int size) {
+    public ResponseResult getUserListByParams(String username, String creatorName, Integer page, Integer size) {
+        if(new PredicateParams().predicateParam(page,size)){
+            return new ResponseResult(ResponseEnum.BADPARAM.getCode(),ResponseEnum.BADPARAM.getMessage());
+        }
         return sysUserService.getUserListByParams(username, creatorName, page, size);
     }
 }

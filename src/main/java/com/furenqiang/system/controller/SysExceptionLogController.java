@@ -1,6 +1,8 @@
 package com.furenqiang.system.controller;
 
+import com.furenqiang.system.common.ResponseEnum;
 import com.furenqiang.system.common.ResponseResult;
+import com.furenqiang.system.filter.PredicateParams;
 import com.furenqiang.system.service.SysExceptionLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -37,7 +39,10 @@ public class SysExceptionLogController {
             @ApiImplicitParam(name = "size", value = "每页个数", dataType = "int", example = "10")})
     @GetMapping("/getExceptionLogListByParams")
     public ResponseResult getExceptionLogListByParams(String username, String excName, String method, String ip,
-                                                      int page, int size) {
+                                                      Integer page, Integer size) {
+        if(new PredicateParams().predicateParam(page,size)){
+            return new ResponseResult(ResponseEnum.BADPARAM.getCode(),ResponseEnum.BADPARAM.getMessage());
+        }
         return sysExceptionLogService.getExceptionLogListByParams(username, excName, method, ip, page, size);
     }
 

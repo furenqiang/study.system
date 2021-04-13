@@ -1,11 +1,12 @@
 package com.furenqiang.system.common;
 
 public enum ResponseEnum {
-    ERROR(400, "请求失败!"),
     SUCCESS(200, "请求成功!"),
+    ERROR(400, "请求失败!"),
+    NOTROLE(401, "未授权!"),
+    BADPARAM(402, "参数错误!"),
     NOTLOGIN(403, "未登录!"),
     NOTFOUND(404, "未找到!"),
-    NOTROLE(203, "未授权!"),
     FAIL(500, "服务器内部出错!");
 
 
