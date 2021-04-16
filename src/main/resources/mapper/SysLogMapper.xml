@@ -135,16 +135,18 @@
     <!--</update>-->
 
     <select id="countTimeByParams" resultMap="BaseResultVOMap">
-        SELECT
-            sum( sl.time ) AS time,
-            DATE_FORMAT( sl.createTime, '%Y-%m-%d' ) AS createTime
-        FROM
-            sys_log AS sl
-        GROUP BY
-            DATE_FORMAT(sl.createTime,'%Y-%m-%d')
-        ORDER BY
-            DATE_FORMAT(sl.createTime,'%Y-%m-%d')
-	    LIMIT 0,7
+        SELECT * FROM (
+            SELECT
+                sum( sl.time ) AS time,
+                DATE_FORMAT( sl.createTime, '%Y-%m-%d' ) AS createTime
+            FROM
+                sys_log AS sl
+            GROUP BY
+                DATE_FORMAT(sl.createTime,'%Y-%m-%d')
+            ORDER BY
+                DATE_FORMAT(sl.createTime,'%Y-%m-%d') DESC
+            LIMIT 0,7) t
+		ORDER BY t.createTime
     </select>
 
 </mapper>

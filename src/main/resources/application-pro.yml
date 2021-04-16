@@ -36,7 +36,13 @@ mybatis-plus:
     - classpath:mapper/*Mapper.xml
   type-aliases-package: com.furenqiang.system.entity
   global-config:
-    db-column-underline: true
+    db-column-underline: false
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: false
 
 eureka:
   client:

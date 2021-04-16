@@ -155,29 +155,33 @@
     <!--GROUP BY username-->
     <!--</select>-->
     <select id="countExceptByParams" resultMap="BaseResultVOMap">
-        SELECT
-            count(sel.id) AS num,
-            DATE_FORMAT( sel.createTime, '%Y-%m-%d' ) AS createTime
-        FROM
-            sys_exception_log AS sel
-        GROUP BY
-            DATE_FORMAT( sel.createTime, '%Y-%m-%d' )
-        ORDER BY
-            DATE_FORMAT( sel.createTime, '%Y-%m-%d' )
-            LIMIT 0,7
+        SELECT * FROM (
+            SELECT
+                count(sel.id) AS num,
+                DATE_FORMAT( sel.createTime, '%Y-%m-%d' ) AS createTime
+            FROM
+                sys_exception_log AS sel
+            GROUP BY
+                DATE_FORMAT( sel.createTime, '%Y-%m-%d' )
+            ORDER BY
+                DATE_FORMAT( sel.createTime, '%Y-%m-%d' ) DESC
+                LIMIT 0,7) t
+        ORDER BY t.createTime
     </select>
 
     <select id="countExceptTop3" resultMap="BaseResultVOMap">
-        SELECT
-            count( sel.id ) AS num,
-            sel.excName AS excName
-        FROM
-            sys_exception_log AS sel
-        GROUP BY
-            sel.excName
+       SELECT * FROM(
+            SELECT
+                count( sel.id ) AS num,
+                sel.excName AS excName
+            FROM
+                sys_exception_log AS sel
+            GROUP BY
+                sel.excName
+            ORDER BY num DESC
+            LIMIT 0,3) t
         ORDER BY
-            num
-        LIMIT 0,3
+            t.num
     </select>
 
 </mapper>

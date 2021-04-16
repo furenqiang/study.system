@@ -21,6 +21,8 @@ public class SysMenuTreeVO implements Serializable {
 
     private String name;
 
+    private Integer code;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") // 前端时间字符串转java时间戳
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8") // 后台时间戳转前端时间字符串(json对象)
     private Date createTime;
@@ -33,7 +35,9 @@ public class SysMenuTreeVO implements Serializable {
 
     private int level;
 
-    private int hasChildren;
+    private int hasChild;
+
+    private Integer deleted;
 
     private List<SysMenuTreeVO> children;
 
@@ -125,12 +129,12 @@ public class SysMenuTreeVO implements Serializable {
         this.level = level;
     }
 
-    public int getHasChildren() {
-        return hasChildren;
+    public int getHasChild() {
+        return hasChild;
     }
 
-    public void setHasChildren(int hasChildren) {
-        this.hasChildren = hasChildren;
+    public void setHasChild(int hasChild) {
+        this.hasChild = hasChild;
     }
 
     public List<SysMenuTreeVO> getChildren() {
@@ -139,5 +143,21 @@ public class SysMenuTreeVO implements Serializable {
 
     public void setChildren(List<SysMenuTreeVO> children) {
         this.children = children;
+    }
+
+    public Integer getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Integer deleted) {
+        this.deleted = deleted;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
     }
 }

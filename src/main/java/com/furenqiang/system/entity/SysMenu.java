@@ -2,6 +2,7 @@ package com.furenqiang.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,6 +25,8 @@ public class SysMenu {
 
     private String name;
 
+    private Integer code;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") // 前端时间字符串转java时间戳
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8") // 后台时间戳转前端时间字符串(json对象)
     private Date createTime;
@@ -32,11 +35,12 @@ public class SysMenu {
 
     private String creatorName;
 
-    private int parentId;
+    private Integer parentId;
 
     private int level;
 
-    private int hasChildren;
+    @TableLogic
+    private Integer deleted;
 
     public int getId() {
         return id;
@@ -110,11 +114,11 @@ public class SysMenu {
         this.creatorName = creatorName;
     }
 
-    public int getParentId() {
+    public Integer getParentId() {
         return parentId;
     }
 
-    public void setParentId(int parentId) {
+    public void setParentId(Integer parentId) {
         this.parentId = parentId;
     }
 
@@ -126,11 +130,19 @@ public class SysMenu {
         this.level = level;
     }
 
-    public int getHasChildren() {
-        return hasChildren;
+    public Integer getDeleted() {
+        return deleted;
     }
 
-    public void setHasChildren(int hasChildren) {
-        this.hasChildren = hasChildren;
+    public void setDeleted(Integer deleted) {
+        this.deleted = deleted;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
     }
 }
