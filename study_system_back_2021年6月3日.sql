@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : aliyun
+ Source Server         : localMysql
  Source Server Type    : MySQL
- Source Server Version : 50728
- Source Host           : 47.97.200.76:3306
+ Source Server Version : 50724
+ Source Host           : localhost:3306
  Source Schema         : study_system
 
  Target Server Type    : MySQL
- Target Server Version : 50728
+ Target Server Version : 50724
  File Encoding         : 65001
 
- Date: 03/06/2021 15:40:51
+ Date: 18/05/2021 09:50:28
 */
 
 SET NAMES utf8mb4;
@@ -112,7 +112,7 @@ CREATE TABLE `sys_log`  (
   `createTime` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `result` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '返回结果',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 160 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 149 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_log
@@ -261,21 +261,10 @@ INSERT INTO `sys_log` VALUES (141, 'Eric', '删除菜单', 46, 'com.furenqiang.s
 INSERT INTO `sys_log` VALUES (142, 'Eric', '添加菜单', 119, 'com.furenqiang.system.controller.SysMenuController.addMenu()', '{\"path\":\"/ejsh\",\"level\":\"2\",\"title\":\"二级三号\",\"parentId\":\"27\"}', '127.0.0.1', '2021-04-16 09:35:28', '{\"code\":200,\"data\":{\"code\":3,\"creatorId\":2,\"creatorName\":\"Eric\",\"id\":30,\"index\":\"4-3\",\"level\":2,\"parentId\":27,\"path\":\"/ejsh\",\"title\":\"二级三号\"},\"message\":\"请求成功!\",\"total\":1}');
 INSERT INTO `sys_log` VALUES (143, 'Eric', '修改菜单', 3, 'com.furenqiang.system.controller.SysMenuController.updateMenu()', '{\"path\":\"/ejsh\",\"id\":\"30\",\"title\":\"二级三号\"}', '127.0.0.1', '2021-04-16 09:36:13', '{\"code\":200,\"data\":{\"creatorId\":0,\"id\":30,\"level\":0,\"path\":\"/ejsh\",\"title\":\"二级三号\"},\"message\":\"请求成功!\",\"total\":1}');
 INSERT INTO `sys_log` VALUES (144, 'Eric', '修改菜单', 7, 'com.furenqiang.system.controller.SysMenuController.updateMenu()', '{\"path\":\"/demo2\",\"id\":\"15\",\"title\":\"休闲娱乐\"}', '127.0.0.1', '2021-04-16 09:37:57', '{\"code\":200,\"data\":{\"creatorId\":0,\"id\":15,\"level\":0,\"path\":\"/demo2\",\"title\":\"休闲娱乐\"},\"message\":\"请求成功!\",\"total\":1}');
-INSERT INTO `sys_log` VALUES (145, 'Eric', '删除菜单', 19, 'com.furenqiang.system.controller.SysMenuController.deleteMenu()', '{\"id\":\"1\"}', '127.0.0.1', '2021-04-16 11:06:01', '{\"code\":402,\"data\":[{\"code\":1,\"createTime\":1618298416000,\"creatorId\":2,\"creatorName\":\"Eric\",\"deleted\":0,\"id\":2,\"index\":\"1-1\",\"level\":2,\"name\":\"2\",\"parentId\":1,\"path\":\"/user\",\"title\":\"系统用户\"},{\"code\":2,\"createTime\":1618472039000,\"creatorId\":2,\"creatorName\":\"Eric\",\"deleted\":0,\"id\":9,\"index\":\"1-2\",\"level\":2,\"name\":\"9\",\"parentId\":1,\"path\":\"/menu\",\"title\":\"菜单管理\"}],\"message\":\"参数错误!请先删除其子菜单!\",\"total\":2}');
-INSERT INTO `sys_log` VALUES (146, 'Eric', '修改菜单', 34, 'com.furenqiang.system.controller.SysMenuController.updateMenu()', '{\"path\":\"/AMap\",\"id\":\"12\",\"title\":\"三维地图\"}', '127.0.0.1', '2021-04-16 13:36:03', '{\"code\":200,\"data\":{\"creatorId\":0,\"id\":12,\"level\":0,\"path\":\"/AMap\",\"title\":\"三维地图\"},\"message\":\"请求成功!\",\"total\":1}');
-INSERT INTO `sys_log` VALUES (147, 'Eric', '修改菜单', 21, 'com.furenqiang.system.controller.SysMenuController.updateMenu()', '{\"path\":\"/AMap\",\"id\":\"12\",\"title\":\"二维地图\"}', '127.0.0.1', '2021-04-16 14:18:14', '{\"code\":200,\"data\":{\"creatorId\":0,\"id\":12,\"level\":0,\"path\":\"/AMap\",\"title\":\"二维地图\"},\"message\":\"请求成功!\",\"total\":1}');
-INSERT INTO `sys_log` VALUES (148, 'Eric', '修改菜单', 21, 'com.furenqiang.system.controller.SysMenuController.updateMenu()', '{\"path\":\"/demo2\",\"id\":\"15\",\"title\":\"三维地球\"}', '127.0.0.1', '2021-04-16 14:18:24', '{\"code\":200,\"data\":{\"creatorId\":0,\"id\":15,\"level\":0,\"path\":\"/demo2\",\"title\":\"三维地球\"},\"message\":\"请求成功!\",\"total\":1}');
-INSERT INTO `sys_log` VALUES (149, 'Eric', '修改菜单', 30, 'com.furenqiang.system.controller.SysMenuController.updateMenu()', '{\"path\":\"/musicPlay\",\"id\":\"7\",\"title\":\"音乐播放\"}', '127.0.0.1', '2021-05-18 10:06:24', '{\"code\":200,\"data\":{\"creatorId\":0,\"id\":7,\"level\":0,\"path\":\"/musicPlay\",\"title\":\"音乐播放\"},\"message\":\"请求成功!\",\"total\":1}');
-INSERT INTO `sys_log` VALUES (150, 'Eric', '修改菜单', 29, 'com.furenqiang.system.controller.SysMenuController.updateMenu()', '{\"path\":\"/leafletMap\",\"id\":\"15\",\"title\":\"leaflet地图\"}', '127.0.0.1', '2021-05-18 10:08:30', '{\"code\":200,\"data\":{\"creatorId\":0,\"id\":15,\"level\":0,\"path\":\"/leafletMap\",\"title\":\"leaflet地图\"},\"message\":\"请求成功!\",\"total\":1}');
-INSERT INTO `sys_log` VALUES (151, 'Eric', '修改菜单', 30, 'com.furenqiang.system.controller.SysMenuController.updateMenu()', '{\"path\":\"/oneMap\",\"id\":\"31\",\"title\":\"一张图\"}', '127.0.0.1', '2021-05-18 10:13:35', '{\"code\":200,\"data\":{\"creatorId\":0,\"id\":31,\"level\":0,\"path\":\"/oneMap\",\"title\":\"一张图\"},\"message\":\"请求成功!\",\"total\":1}');
-INSERT INTO `sys_log` VALUES (152, 'Eric', '添加菜单', 226, 'com.furenqiang.system.controller.SysMenuController.addMenu()', '{\"path\":\"\",\"level\":\"1\",\"icon\":\"el-icon-pie-chart\",\"title\":\"一张图\"}', '127.0.0.1', '2021-05-24 17:02:40', '{\"code\":200,\"data\":{\"code\":4,\"creatorId\":2,\"creatorName\":\"Eric\",\"icon\":\"el-icon-pie-chart\",\"id\":32,\"index\":\"4\",\"level\":1,\"path\":\"\",\"title\":\"一张图\"},\"message\":\"请求成功!\",\"total\":1}');
-INSERT INTO `sys_log` VALUES (153, 'Eric', '添加菜单', 108, 'com.furenqiang.system.controller.SysMenuController.addMenu()', '{\"path\":\"/sellerPage\",\"level\":\"2\",\"title\":\"sellerPage\",\"parentId\":\"32\"}', '127.0.0.1', '2021-05-24 17:04:01', '{\"code\":200,\"data\":{\"code\":1,\"creatorId\":2,\"creatorName\":\"Eric\",\"id\":33,\"index\":\"4-1\",\"level\":2,\"parentId\":32,\"path\":\"/sellerPage\",\"title\":\"sellerPage\"},\"message\":\"请求成功!\",\"total\":1}');
-INSERT INTO `sys_log` VALUES (154, 'Eric', '添加菜单', 49, 'com.furenqiang.system.controller.SysMenuController.addMenu()', '{\"path\":\"/trendPage\",\"level\":\"2\",\"title\":\"trendPage\",\"parentId\":\"32\"}', '127.0.0.1', '2021-05-24 17:04:18', '{\"code\":200,\"data\":{\"code\":2,\"creatorId\":2,\"creatorName\":\"Eric\",\"id\":34,\"index\":\"4-2\",\"level\":2,\"parentId\":32,\"path\":\"/trendPage\",\"title\":\"trendPage\"},\"message\":\"请求成功!\",\"total\":1}');
-INSERT INTO `sys_log` VALUES (155, 'Eric', '添加菜单', 110, 'com.furenqiang.system.controller.SysMenuController.addMenu()', '{\"path\":\"/mapPage\",\"level\":\"2\",\"title\":\"mapPage\",\"parentId\":\"32\"}', '127.0.0.1', '2021-05-24 17:04:29', '{\"code\":200,\"data\":{\"code\":3,\"creatorId\":2,\"creatorName\":\"Eric\",\"id\":35,\"index\":\"4-3\",\"level\":2,\"parentId\":32,\"path\":\"/mapPage\",\"title\":\"mapPage\"},\"message\":\"请求成功!\",\"total\":1}');
-INSERT INTO `sys_log` VALUES (156, 'Eric', '添加菜单', 37, 'com.furenqiang.system.controller.SysMenuController.addMenu()', '{\"path\":\"/rankPage\",\"level\":\"2\",\"title\":\"rankPage\",\"parentId\":\"32\"}', '127.0.0.1', '2021-05-24 17:04:40', '{\"code\":200,\"data\":{\"code\":4,\"creatorId\":2,\"creatorName\":\"Eric\",\"id\":36,\"index\":\"4-4\",\"level\":2,\"parentId\":32,\"path\":\"/rankPage\",\"title\":\"rankPage\"},\"message\":\"请求成功!\",\"total\":1}');
-INSERT INTO `sys_log` VALUES (157, 'Eric', '修改菜单', 74, 'com.furenqiang.system.controller.SysMenuController.updateMenu()', '{\"path\":\"\",\"id\":\"32\",\"title\":\"一张图组件\"}', '127.0.0.1', '2021-05-24 17:04:46', '{\"code\":200,\"data\":{\"creatorId\":0,\"id\":32,\"level\":0,\"path\":\"\",\"title\":\"一张图组件\"},\"message\":\"请求成功!\",\"total\":1}');
-INSERT INTO `sys_log` VALUES (158, 'Eric', '添加菜单', 37, 'com.furenqiang.system.controller.SysMenuController.addMenu()', '{\"path\":\"/hotPage\",\"level\":\"2\",\"title\":\"hotPage\",\"parentId\":\"32\"}', '127.0.0.1', '2021-05-24 17:04:58', '{\"code\":200,\"data\":{\"code\":5,\"creatorId\":2,\"creatorName\":\"Eric\",\"id\":37,\"index\":\"4-5\",\"level\":2,\"parentId\":32,\"path\":\"/hotPage\",\"title\":\"hotPage\"},\"message\":\"请求成功!\",\"total\":1}');
-INSERT INTO `sys_log` VALUES (159, 'Eric', '添加菜单', 128, 'com.furenqiang.system.controller.SysMenuController.addMenu()', '{\"path\":\"/stockPage\",\"level\":\"2\",\"title\":\"stockPage\",\"parentId\":\"32\"}', '127.0.0.1', '2021-05-25 16:58:30', '{\"code\":200,\"data\":{\"code\":6,\"creatorId\":2,\"creatorName\":\"Eric\",\"id\":38,\"index\":\"4-6\",\"level\":2,\"parentId\":32,\"path\":\"/stockPage\",\"title\":\"stockPage\"},\"message\":\"请求成功!\",\"total\":1}');
+INSERT INTO `sys_log` VALUES (145, 'Eric', '修改菜单', 274, 'com.furenqiang.system.controller.SysMenuController.updateMenu()', '{\"path\":\"/AMap\",\"id\":\"12\",\"title\":\"百度地图\"}', '127.0.0.1', '2021-05-06 10:24:07', '{\"code\":200,\"data\":{\"creatorId\":0,\"id\":12,\"level\":0,\"path\":\"/AMap\",\"title\":\"百度地图\"},\"message\":\"请求成功!\",\"total\":1}');
+INSERT INTO `sys_log` VALUES (146, 'Eric', '修改菜单', 111, 'com.furenqiang.system.controller.SysMenuController.updateMenu()', '{\"path\":\"/AMap\",\"id\":\"12\",\"title\":\"高德地图\"}', '127.0.0.1', '2021-05-06 10:24:36', '{\"code\":200,\"data\":{\"creatorId\":0,\"id\":12,\"level\":0,\"path\":\"/AMap\",\"title\":\"高德地图\"},\"message\":\"请求成功!\",\"total\":1}');
+INSERT INTO `sys_log` VALUES (147, 'Eric', '修改菜单', 124, 'com.furenqiang.system.controller.SysMenuController.updateMenu()', '{\"path\":\"/demo2\",\"id\":\"15\",\"title\":\"leaflet地图\"}', '127.0.0.1', '2021-05-06 10:25:38', '{\"code\":200,\"data\":{\"creatorId\":0,\"id\":15,\"level\":0,\"path\":\"/demo2\",\"title\":\"leaflet地图\"},\"message\":\"请求成功!\",\"total\":1}');
+INSERT INTO `sys_log` VALUES (148, 'Eric', '添加菜单', 303, 'com.furenqiang.system.controller.SysMenuController.addMenu()', '{\"path\":\"/3DMap\",\"level\":\"2\",\"title\":\"三维地球\",\"parentId\":\"6\"}', '127.0.0.1', '2021-05-06 10:58:21', '{\"code\":200,\"data\":{\"code\":4,\"creatorId\":2,\"creatorName\":\"Eric\",\"id\":31,\"index\":\"3-4\",\"level\":2,\"parentId\":6,\"path\":\"/3DMap\",\"title\":\"三维地球\"},\"message\":\"请求成功!\",\"total\":1}');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -295,7 +284,7 @@ CREATE TABLE `sys_menu`  (
   `level` int(2) NULL DEFAULT NULL COMMENT '菜单等级，一级菜单为1，二级菜单为2',
   `deleted` int(2) NOT NULL DEFAULT 0 COMMENT '逻辑删除 0-未删除 1-已删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -306,7 +295,7 @@ INSERT INTO `sys_menu` VALUES (3, '日志查看', '2', 'el-icon-date', NULL, '2'
 INSERT INTO `sys_menu` VALUES (4, '操作日志', '2-1', NULL, '/log', '1', '2021-04-15 15:33:28', 2, 'Eric', 3, 2, 0);
 INSERT INTO `sys_menu` VALUES (5, '异常日志', '2-2', NULL, '/exceptLog', '2', '2021-04-15 15:33:33', 2, 'Eric', 3, 2, 0);
 INSERT INTO `sys_menu` VALUES (6, '敬请期待', '3', 'el-icon-setting', NULL, '3', '2021-04-15 15:33:21', 2, 'Eric', 0, 1, 0);
-INSERT INTO `sys_menu` VALUES (7, '音乐播放', '3-1', 'el-icon-headset', '/musicPlay', '1', '2021-05-18 10:06:23', 2, 'Eric', 6, 2, 0);
+INSERT INTO `sys_menu` VALUES (7, '音乐播放', '3-1', 'el-icon-headset', '/demo1', '1', '2021-04-15 15:33:25', 2, 'Eric', 6, 2, 0);
 INSERT INTO `sys_menu` VALUES (8, '测试删除1', '4', NULL, NULL, '4', '2021-04-15 15:33:57', 2, 'Eric', 0, 1, 1);
 INSERT INTO `sys_menu` VALUES (9, '菜单管理', '1-2', NULL, '/menu', '2', '2021-04-15 15:33:59', 2, 'Eric', 1, 2, 0);
 INSERT INTO `sys_menu` VALUES (10, '测试添加3', '4-1', NULL, NULL, '1', '2021-04-15 15:34:05', 2, 'Eric', 8, 2, 1);
@@ -314,21 +303,14 @@ INSERT INTO `sys_menu` VALUES (11, '休闲娱乐', '3-2', NULL, '/demo2', '2', '
 INSERT INTO `sys_menu` VALUES (12, '高德地图', '3-3', NULL, '/AMap', '3', '2021-05-06 10:24:36', 2, 'Eric', 6, 2, 0);
 INSERT INTO `sys_menu` VALUES (13, '正在开发', '4', 'el-icon-s-promotion', NULL, '4', '2021-04-16 09:28:58', 2, 'Eric', 0, 1, 1);
 INSERT INTO `sys_menu` VALUES (14, '学习学校', '3-2', NULL, '/demo2', '2', '2021-04-15 15:56:56', 2, 'Eric', 6, 2, 1);
-INSERT INTO `sys_menu` VALUES (15, 'leaflet地图', '3-2', NULL, '/leafletMap', '2', '2021-05-18 10:08:30', 2, 'Eric', 6, 2, 0);
+INSERT INTO `sys_menu` VALUES (15, 'leaflet地图', '3-2', NULL, '/demo2', '2', '2021-05-06 10:25:38', 2, 'Eric', 6, 2, 0);
 INSERT INTO `sys_menu` VALUES (25, '一级菜单', '4', 'el-icon-headset', NULL, '4', '2021-04-16 09:30:52', 2, 'Eric', 0, 1, 1);
 INSERT INTO `sys_menu` VALUES (26, '学校学习', '4-1', NULL, '/xxxx', '1', '2021-04-16 09:30:48', 2, 'Eric', 25, 2, 1);
 INSERT INTO `sys_menu` VALUES (27, '一级菜单', '4', 'el-icon-headset', NULL, '4', '2021-04-16 09:36:04', 2, 'Eric', 0, 1, 1);
 INSERT INTO `sys_menu` VALUES (28, '二级一号', '4-1', NULL, '/ejyh', '1', '2021-04-16 09:35:04', 2, 'Eric', 27, 2, 1);
 INSERT INTO `sys_menu` VALUES (29, '二级二号', '4-2', NULL, '/ejeh', '2', '2021-04-16 09:36:04', 2, 'Eric', 27, 2, 1);
 INSERT INTO `sys_menu` VALUES (30, '二级三号', '4-3', NULL, '/ejsh', '3', '2021-04-16 09:36:04', 2, 'Eric', 27, 2, 1);
-INSERT INTO `sys_menu` VALUES (31, '一张图', '3-4', NULL, '/oneMap', '4', '2021-05-18 10:13:35', 2, 'Eric', 6, 2, 0);
-INSERT INTO `sys_menu` VALUES (32, '一张图组件', '4', 'el-icon-pie-chart', NULL, '4', '2021-05-24 17:04:46', 2, 'Eric', 0, 1, 0);
-INSERT INTO `sys_menu` VALUES (33, 'sellerPage', '4-1', NULL, '/sellerPage', '1', '2021-05-24 17:04:01', 2, 'Eric', 32, 2, 0);
-INSERT INTO `sys_menu` VALUES (34, 'trendPage', '4-2', NULL, '/trendPage', '2', '2021-05-24 17:04:17', 2, 'Eric', 32, 2, 0);
-INSERT INTO `sys_menu` VALUES (35, 'mapPage', '4-3', NULL, '/mapPage', '3', '2021-05-24 17:04:29', 2, 'Eric', 32, 2, 0);
-INSERT INTO `sys_menu` VALUES (36, 'rankPage', '4-4', NULL, '/rankPage', '4', '2021-05-24 17:04:39', 2, 'Eric', 32, 2, 0);
-INSERT INTO `sys_menu` VALUES (37, 'hotPage', '4-5', NULL, '/hotPage', '5', '2021-05-24 17:04:57', 2, 'Eric', 32, 2, 0);
-INSERT INTO `sys_menu` VALUES (38, 'stockPage', '4-6', NULL, '/stockPage', '6', '2021-05-25 16:58:29', 2, 'Eric', 32, 2, 0);
+INSERT INTO `sys_menu` VALUES (31, '三维地球', '3-4', NULL, '/3DMap', '4', '2021-05-06 10:58:20', 2, 'Eric', 6, 2, 0);
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -415,7 +397,9 @@ DROP TABLE IF EXISTS `test`;
 CREATE TABLE `test`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `id_test_name`(`name`) USING BTREE,
+  FULLTEXT INDEX `NAME`(`name`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
