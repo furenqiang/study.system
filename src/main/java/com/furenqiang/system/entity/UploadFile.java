@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * @author Eric
  * */
-@TableName("upload_file") //指定对应数据表，省略的话默认表名为类名小写
+@TableName("sys_upload_file") //指定对应数据表，省略的话默认表名为类名小写
 public class UploadFile {
 
     @TableId(value = "id",type = IdType.AUTO)//指定自增策略

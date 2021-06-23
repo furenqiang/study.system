@@ -3,7 +3,9 @@ package com.furenqiang.system.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.furenqiang.system.common.ResponseEnum;
 import com.furenqiang.system.common.ResponseResult;
+import com.furenqiang.system.entity.SysChunkFiles;
 import com.furenqiang.system.entity.UploadFile;
+import com.furenqiang.system.mapper.SysChunkFilesMapper;
 import com.furenqiang.system.mapper.UploadFileMapper;
 import com.furenqiang.system.service.UploadFileService;
 import com.furenqiang.system.vo.FileTree;
@@ -19,6 +21,9 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     @Autowired
     UploadFileMapper fileMapper;
+
+    @Autowired
+    SysChunkFilesMapper sysChunkFilesMapper;
 
     List <FileTree> node=new LinkedList();
 
@@ -151,4 +156,29 @@ public class UploadFileServiceImpl implements UploadFileService {
     public UploadFile getFileById(Integer id) {
         return fileMapper.getFileById(id);
     }
+
+    @Override
+    public ResponseResult addChunkFiles(String originalFilename) {
+        try {
+            SysChunkFiles file = new SysChunkFiles();
+            List<String> fnList = Arrays.asList(originalFilename.split("\\."));
+            file.setFileName(fnList.get(0));
+            file.setSuffix(fnList.get(1));
+            file.setFilePath(originalFilename);
+            if (sysChunkFilesMapper.fileIsExist(originalFilename)) {
+                return new ResponseResult(ResponseEnum.SUCCESS.getCode(),ResponseEnum.SUCCESS.getMessage());
+            } else if (sysChunkFilesMapper.insert(file) == 1) {
+                return new ResponseResult(ResponseEnum.SUCCESS.getCode(),ResponseEnum.SUCCESS.getMessage());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseResult(ResponseEnum.ERROR.getCode(),ResponseEnum.ERROR.getMessage());
+    }
+
+    @Override
+    public ResponseResult getFileDetails(String id) {
+        return new ResponseResult(ResponseEnum.SUCCESS.getCode(),sysChunkFilesMapper.selectById(id),ResponseEnum.SUCCESS.getMessage());
+    }
+
 }

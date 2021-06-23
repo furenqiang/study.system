@@ -14,4 +14,8 @@ public interface UploadFileService {
     String parseFile(java.io.File dest, String unzipPath, String fileName, String folder)throws IOException;
 
     ResponseResult getFileList();
+
+    ResponseResult addChunkFiles(String originalFilename);
+
+    ResponseResult getFileDetails(String id);
 }

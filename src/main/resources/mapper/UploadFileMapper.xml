@@ -19,13 +19,13 @@
 	</sql>
 
     <select id="getFileList" resultType="com.furenqiang.system.entity.UploadFile">
-        select id,name,path,parse_file as parseFile,original_name as originalName,create_time as createTime,file_num as fileNum,size from upload_file
+        select id,name,path,parse_file as parseFile,original_name as originalName,create_time as createTime,file_num as fileNum,size from sys_upload_file
         where
         deleted=0
     </select>
 
     <insert id="save" parameterType="com.furenqiang.system.entity.UploadFile" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        insert into upload_file
+        insert into sys_upload_file
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null and name != ''">
                 name,
@@ -76,7 +76,7 @@
 
     <select id="getFileById" resultType="com.furenqiang.system.entity.UploadFile">
         select id,name,path,parse_file as parseFile,original_name as originalName,create_time as createTime,unzip_folder as unzipFolder,file_num as fileNum,size
-        from upload_file where
+        from sys_upload_file where
         id=#{id,jdbcType=INTEGER}
     </select>
 

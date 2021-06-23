@@ -1,20 +1,23 @@
 package com.furenqiang.system.controller;
 
+import cn.novelweb.tool.upload.local.LocalUpload;
+import cn.novelweb.tool.upload.local.pojo.UploadFileParam;
+import com.furenqiang.system.common.ResponseEnum;
 import com.furenqiang.system.common.ResponseResult;
 import com.furenqiang.system.entity.MyProps;
+import com.furenqiang.system.entity.SysChunkFiles;
 import com.furenqiang.system.entity.UploadFile;
 import com.furenqiang.system.service.UploadFileService;
+import com.furenqiang.system.utils.EncodingUtils;
 import com.furenqiang.system.utils.UploadUtil;
 import io.swagger.annotations.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,7 +69,7 @@ public class UploadFileController {
         String fileName = UploadUtil.generateFileName(file.getOriginalFilename());
         int size = (int) file.getSize();
         logger.info("-------上传文件:"+fileName + ",大小为：" + size);
-        File dest = new File(myProps.getFilePath() + "\\" + fileName);
+        File dest = new File(myProps.getFilePath() + "/" + fileName);
         if(!dest.getParentFile().exists()){ //判断文件父目录是否存在
             dest.getParentFile().mkdir();
         }
@@ -75,7 +78,7 @@ public class UploadFileController {
             //解析存parseFile
             List<String> fnList = Arrays.asList(fileName.split("\\."));
             //先解压
-            List<String> numList = UploadUtil.unzipFile(dest, myProps.getUnzipPath() +  "\\"+ fnList.get(0), fnList.get(0));
+            List<String> numList = UploadUtil.unzipFile(dest, myProps.getUnzipPath() +  "/"+ fnList.get(0), fnList.get(0));
             String jsonFileTree = uploadfileService.parseFile(dest, myProps.getUnzipPath(), file.getOriginalFilename(),fnList.get(0));
             //文件名称、路径存库
             //获取解压后文件大小
@@ -108,7 +111,7 @@ public class UploadFileController {
         UploadFile fileById = uploadfileService.getFileById(id);
         //testzip\testnextfile\nextnextfile\安阳市安阳县安阳村.json
         if(!(filePath==null)){
-            filePath=fileById.getUnzipFolder()+"\\"+ filePath;
+            filePath=fileById.getUnzipFolder()+"/"+ filePath;
         }else {
             filePath = fileById.getPath();
             fileName =fileById.getName();
@@ -233,5 +236,99 @@ public class UploadFileController {
             String name = fileById.getName();
             return "ftp://"+myProps.getFtpIp()+":"+myProps.getFtpPort()+"/"+URLEncoder.encode(name,"GBK");
         }
+    }
+
+    /**
+     * 断点续传方式上传文件：用于大文件上传
+     * @Author Eric
+     * @param param
+     * @param request
+     * @return
+     */
+    @ApiOperation(value = "断点续传方式上传文件：用于大文件上传", httpMethod = "POST")
+    @ApiResponses({ @ApiResponse(code = 200, message = "成功"), @ApiResponse(code = 400, message = "失败") })
+    @PostMapping(value = "/breakPointUpload", consumes = "multipart/*", headers = "content-type=multipart/form-data", produces = "application/json;" +
+            "charset=UTF-8")
+    public ResponseResult breakPointUpload(UploadFileParam param, HttpServletRequest request) {
+        try {
+            // 这里的 chunkSize(分片大小) 要与前端传过来的大小一致
+            cn.novelweb.tool.http.Result result = LocalUpload.fragmentFileUploader(param, myProps.getFilePath(), myProps.getUnzipPath(), 1024L,
+                    request);
+            //存库
+            ResponseResult responseResult = uploadfileService.addChunkFiles(param.getFile().getOriginalFilename());
+            responseResult.setData(result);
+            return responseResult;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return new ResponseResult(ResponseEnum.ERROR.getCode(),ResponseEnum.ERROR.getMessage());
+    }
+
+    /**
+     * 添加文件
+     * 断点续传完成后上传文件信息进行入库操作
+     *
+     * @param dto
+     * @return
+     */
+//    @ApiOperation(value = "断点续传完成后添加文件信息", httpMethod = "POST")
+//    @ApiImplicitParams({ @ApiImplicitParam(name = "fileName", value = "文件名称", dataType = "String"),
+//            @ApiImplicitParam(name = "suffix", value = "文件后缀", dataType = "String") })
+//    @ApiResponses({ @ApiResponse(code = 200, message = "成功"), @ApiResponse(code = 400, message = "失败") })
+//    @PostMapping("/addChunkFiles")
+//    public ResponseResult addChunkFiles(@RequestBody SysChunkFiles dto, BindingResult bindingResult) {
+//        if (bindingResult.hasErrors()) {
+//            return new ResponseResult(ResponseEnum.ERROR.getCode(), bindingResult.getAllErrors().get(0).getDefaultMessage());
+//        }
+//        return uploadfileService.addChunkFiles(dto);
+//    }
+
+    /**
+     * 文件下载
+     *
+     * @param id
+     * @param request
+     * @param response
+     */
+    @ApiOperation(value = "下载文件", httpMethod = "POST")
+    @ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "文件ID", dataType = "String") })
+    @ApiResponses({ @ApiResponse(code = 200, message = "成功"), @ApiResponse(code = 400, message = "失败") })
+    @GetMapping(value = "/download/{id}")
+    public void viewFilesImage(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
+        OutputStream outputStream = null;
+        InputStream inputStream = null;
+        try {
+            ResponseResult fileDetails = uploadfileService.getFileDetails(id);
+            SysChunkFiles sysChunkFiles= (SysChunkFiles) fileDetails.getData();
+            String filename = sysChunkFiles.getFilePath();
+            inputStream = getFileInputStream(sysChunkFiles);
+            response.setHeader("Content-Disposition", "attachment;filename=" + EncodingUtils.convertToFileName(request, filename));
+            // 获取输出流
+            outputStream = response.getOutputStream();
+            IOUtils.copy(inputStream, outputStream);
+        } catch (IOException e) {
+            logger.error("文件下载出错", e);
+        } finally {
+            try {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private InputStream getFileInputStream(SysChunkFiles files) {
+        try {
+            File file = new File(myProps.unzipPath + File.separator + files.getFilePath());
+            return new FileInputStream(file);
+        } catch (Exception e) {
+            logger.error("获取文件输入流出错", e);
+        }
+        return null;
     }
 }
