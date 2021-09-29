@@ -34,6 +34,32 @@
         <appender-ref ref="FILE" />
     </appender>
 
+    <!--logstash配置-->
+    <!--<appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
+        <!--<destination>127.0.0.1:4560</destination>-->
+        <!--&lt;!&ndash; 日志输出编码 &ndash;&gt;-->
+        <!--<encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">-->
+            <!--<providers>-->
+                <!--<timestamp>-->
+                    <!--<timeZone>UTC</timeZone>-->
+                <!--</timestamp>-->
+                <!--<pattern>-->
+                    <!--<pattern>-->
+                        <!--{-->
+                        <!--"logLevel": "%level",-->
+                        <!--"serviceName": "${springAppName:-}",-->
+                        <!--"pid": "${PID:-}",-->
+                        <!--"thread": "%thread",-->
+                        <!--"class": "%logger{40}",-->
+                        <!--"rest": "%message"-->
+                        <!--}-->
+                    <!--</pattern>-->
+                <!--</pattern>-->
+            <!--</providers>-->
+        <!--</encoder>-->
+        <!--&lt;!&ndash;<encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>&ndash;&gt;-->
+    <!--</appender>-->
+
 
     <logger name="org.apache.ibatis.cache.decorators.LoggingCache" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE" />
@@ -43,5 +69,6 @@
         <!--<appender-ref ref="ASYNC"/>-->
         <appender-ref ref="FILE" />
         <appender-ref ref="CONSOLE" />
+        <appender-ref ref="LOGSTASH"/>
     </root>
 </configuration>
