@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @Slf4j
 @RequestMapping("/test")
@@ -33,7 +31,7 @@ public class TestController {
      */
     //@Log("测试接口http请求")
     @ApiOperation(value = "测试接口http请求", httpMethod = "GET")
-    @ApiImplicitParams({@ApiImplicitParam(name = "param", value = "参数", dataType = "String")})
+        @ApiImplicitParams({@ApiImplicitParam(name = "param", value = "参数", dataType = "String")})
     @GetMapping("/testHttp")
     public String testHttp(String param) throws Exception {
         log.warn("日志测试,测试接口http请求");
@@ -50,7 +48,7 @@ public class TestController {
     @PreAuthorize("hasAnyAuthority('vip','select')")
     @ApiOperation(value = "测试查询数据库", httpMethod = "GET")
     @GetMapping("/getTest")
-    public List<Test> getTest() throws Exception {
-        return testService.getTest();
+    public Test getTest() throws Exception {
+        return testService.getTest().get(0);
     }
 }
