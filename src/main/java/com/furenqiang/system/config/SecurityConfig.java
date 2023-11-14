@@ -61,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/webjars/**").permitAll()
                 .antMatchers("/v2/**").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/test/**").permitAll()
                 //下面一行代码表示其他所有资源只有认证通过才能访问
                 .anyRequest().authenticated()
                 .and()

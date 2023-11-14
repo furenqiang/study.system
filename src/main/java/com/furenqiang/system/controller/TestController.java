@@ -1,6 +1,7 @@
 package com.furenqiang.system.controller;
 
 import com.furenqiang.system.aop.Log;
+import com.furenqiang.system.common.ResponseResult;
 import com.furenqiang.system.entity.Test;
 import com.furenqiang.system.service.TestService;
 import io.swagger.annotations.Api;
@@ -25,13 +26,13 @@ public class TestController {
 
     /**
      * @return
-     * @Description 测试接口,用来路由跳转后判断是否登录
+     * @Description 测试接口, 用来路由跳转后判断是否登录
      * @Time 2020年12月2日
      * @Author Eric
      */
     //@Log("测试接口http请求")
     @ApiOperation(value = "测试接口http请求", httpMethod = "GET")
-        @ApiImplicitParams({@ApiImplicitParam(name = "param", value = "参数", dataType = "String")})
+    @ApiImplicitParams({@ApiImplicitParam(name = "param", value = "参数", dataType = "String")})
     @GetMapping("/testHttp")
     public String testHttp(String param) throws Exception {
         log.warn("日志测试,测试接口http请求");
@@ -50,5 +51,20 @@ public class TestController {
     @GetMapping("/getTest")
     public Test getTest() throws Exception {
         return testService.getTest().get(0);
+    }
+
+    /**
+     * @return
+     * @Description 测试异常捕获统一处理
+     * @Time 2023年11月14日
+     * @Author Eric
+     */
+    @Log("测试异常捕获")
+//    @PreAuthorize("hasAnyAuthority('vip','select')")
+    @ApiOperation(value = "测试异常捕获", httpMethod = "GET")
+    @GetMapping("/testException")
+    public ResponseResult testException() {
+        if (true) throw new RuntimeException();
+        return ResponseResult.ok();
     }
 }

@@ -1,4 +1,4 @@
-//package com.furenqiang.system.Exception;
+//package com.furenqiang.system.exception;
 //
 //import org.springframework.http.HttpStatus;
 //import org.springframework.web.bind.annotation.ResponseStatus;

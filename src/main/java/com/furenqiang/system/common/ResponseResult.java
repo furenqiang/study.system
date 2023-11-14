@@ -1,6 +1,6 @@
 package com.furenqiang.system.common;
 
-public class ResponseResult {
+public class  ResponseResult {
 
     // 状态码
     private Integer code;
@@ -33,6 +33,22 @@ public class ResponseResult {
     }
 
     public ResponseResult() {
+    }
+
+    public static ResponseResult ok(){
+        return new ResponseResult(ResponseEnum.SUCCESS.getCode(),ResponseEnum.SUCCESS.getMessage());
+    }
+
+    public static <T> ResponseResult ok(T data){
+        return new ResponseResult(ResponseEnum.SUCCESS.getCode(),data,ResponseEnum.SUCCESS.getMessage());
+    }
+
+    public static ResponseResult fail(){
+        return new ResponseResult(ResponseEnum.ERROR.getCode(),ResponseEnum.ERROR.getMessage());
+    }
+
+    public static <T> ResponseResult fail(T data){
+        return new ResponseResult(ResponseEnum.ERROR.getCode(),data,ResponseEnum.ERROR.getMessage());
     }
 
     public Integer getCode() {

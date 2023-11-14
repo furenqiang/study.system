@@ -1,5 +1,6 @@
 package com.furenqiang.system.aop;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.fastjson.JSON;
 import com.furenqiang.system.entity.SysExceptionLog;
 import com.furenqiang.system.entity.SysLog;
@@ -36,16 +37,17 @@ public class LogAspect {
 
     //扫描@Log
     @Pointcut("@annotation(com.furenqiang.system.aop.Log)")
-    public void pointcut() { }
+    public void pointcut() {
+    }
 
 
     //操作处理，记录日志
     /*
-    * 补充：@Before("pointcut()")--前置方法,在目标方法执行前执行
-    *       @After("pointcut()")--后置方法,在目标方法执行后执行
-    *       @Around("pointcut()")--手动执行目标方法 point.proceed();
-    *       @AfterReturning(returning = "retObj", pointcut = "pointcut()")--处理完请求，返回内容
-    * */
+     * 补充：@Before("pointcut()")--前置方法,在目标方法执行前执行
+     *       @After("pointcut()")--后置方法,在目标方法执行后执行
+     *       @Around("pointcut()")--手动执行目标方法 point.proceed();
+     *       @AfterReturning(returning = "retObj", pointcut = "pointcut()")--处理完请求，返回内容
+     * */
     @Around("pointcut()")
     public Object around(ProceedingJoinPoint point) {
         Object result = null;
@@ -63,7 +65,7 @@ public class LogAspect {
         return result;
     }
 
-    private void saveLog(ProceedingJoinPoint joinPoint, long time,Object result) {
+    private void saveLog(ProceedingJoinPoint joinPoint, long time, Object result) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         SysLog sysLog = new SysLog();
@@ -88,7 +90,7 @@ public class LogAspect {
         sysLog.setUsername(userInfo.getUsername());
         sysLog.setTime((int) time);
         sysLog.setCreateTime(new Date());
-        sysLog.setResult(JSON.toJSONString(result));
+        sysLog.setResult(BeanUtil.isEmpty(result) ? "" : JSON.toJSONString(result));
         // 保存系统日志
         sysLogMapper.addSysLog(sysLog);
     }
@@ -129,8 +131,10 @@ public class LogAspect {
             excepLog.setExcMessage(stackTraceToString(e.getClass().getName(), e.getMessage(), e.getStackTrace())); // 异常信息
             // session取用户名
             SysUser userInfo = (SysUser) request.getSession().getAttribute("userInfo");
-            excepLog.setUserId(userInfo.getId());
-            excepLog.setUsername(userInfo.getUsername());
+            if (BeanUtil.isNotEmpty(userInfo)) {
+                excepLog.setUserId(userInfo.getId());
+                excepLog.setUsername(userInfo.getUsername());
+            }
             excepLog.setUrl(request.getRequestURI()); // 操作URI
             excepLog.setIp(IPUtils.getIpAddr(request)); // 操作员IP
             excepLog.setCreateTime(new Date()); // 发生异常时间
@@ -142,8 +146,10 @@ public class LogAspect {
         }
 
     }
+
     /**
      * 转换request 请求参数转map
+     *
      * @param paramMap request获取的参数数组
      */
     public Map<String, String> converMap(Map<String, String[]> paramMap) {

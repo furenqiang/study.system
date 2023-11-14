@@ -7,6 +7,8 @@ public enum ResponseEnum {
     BADPARAM(402, "参数错误!"),
     NOTLOGIN(403, "未登录!"),
     NOTFOUND(404, "未找到!"),
+    BADNAME(4001, "名称已存在!"),
+    FILENOTFOUND(4002, "文件不存在!"),
     FAIL(500, "服务器内部出错!");
 
 
