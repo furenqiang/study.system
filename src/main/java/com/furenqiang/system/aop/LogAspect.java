@@ -87,7 +87,7 @@ public class LogAspect {
         sysLog.setIp(IPUtils.getIpAddr(request));
         // session取用户名
         SysUser userInfo = (SysUser) request.getSession().getAttribute("userInfo");
-        sysLog.setUsername(userInfo.getUsername());
+        if (BeanUtil.isNotEmpty(userInfo)) sysLog.setUsername(userInfo.getUsername());
         sysLog.setTime((int) time);
         sysLog.setCreateTime(new Date());
         sysLog.setResult(BeanUtil.isEmpty(result) ? "" : JSON.toJSONString(result));

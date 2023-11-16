@@ -138,13 +138,14 @@
             <version>1.3.3</version>
         </dependency>
 
-        <!--集成logstash-->
-        <dependency>
-            <groupId>net.logstash.logback</groupId>
-            <artifactId>logstash-logback-encoder</artifactId>
-            <version>5.3</version>
-        </dependency>
+        <!--集成logstash,直接将日志输出到logstash时使用-->
+        <!--<dependency>-->
+            <!--<groupId>net.logstash.logback</groupId>-->
+            <!--<artifactId>logstash-logback-encoder</artifactId>-->
+            <!--<version>5.3</version>-->
+        <!--</dependency>-->
 
+        <!--使用@Slf4j注解时要引入-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
