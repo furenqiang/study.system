@@ -169,6 +169,19 @@
             <artifactId>netty-all</artifactId>
             <version>4.1.73.Final</version>
         </dependency>
+
+        <!--easypoi,excel导出-->
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-base</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+
+        <!--spring-retry异常自动重试业务请求-->
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -189,9 +202,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <!--<configuration>-->
-                    <!--<mainClass>com.furenqiang.system.SystemApplication</mainClass>-->
-                    <!--<executable>true</executable>-->
-                    <!--<includeSystemScope>true</includeSystemScope>-->
+                <!--<mainClass>com.furenqiang.system.SystemApplication</mainClass>-->
+                <!--<executable>true</executable>-->
+                <!--<includeSystemScope>true</includeSystemScope>-->
                 <!--</configuration>-->
             </plugin>
 
@@ -203,6 +216,56 @@
             </plugin>
             <!---->
 
+            <!--加密插件-->
+            <!--&lt;!&ndash;-->
+            <!--[1] 加密后，方法体被清空，保留方法参数、注解等信息;是为了兼容spring，swagger等扫描注解的框架.-->
+            <!--[2] 方法体被清空后，反编译者只能看到方法名和注解，看不到方法的具体内容;-->
+            <!--[3] 加密后的项目需要设置javaagent来启动，启动过程中解密cLasS，完全内存解密，不留下任何解密后的文件。-->
+            <!--[启动加密的Jar]: 生成 xxx-encrypted.jar，这个就是加密后的jar文件;加密后的文件不可直接执行-->
+            <!--无密码: 需要java -javaagent:xxx-encrypted.jar -jar xxx-encrypted.jar-->
+            <!--有密码:java -javaagent:xxx-encrypted.jar='-pwd 0000000' -jar xxx-encrypted.jar&ndash;&gt;-->
+            <!--<plugin>-->
+            <!--<groupId>net.roseboy</groupId>-->
+            <!--<artifactId>classfinal-maven-plugin</artifactId>-->
+            <!--<version>1.2.1</version>-->
+            <!--<configuration>-->
+            <!--<password>#</password>&lt;!&ndash;加密密码，如果是#号，则使用无密码模式加密&ndash;&gt;-->
+            <!--<packages>com.furenqiang.system</packages>&lt;!&ndash;加密的包名(可为空,多个用","分割)&ndash;&gt;-->
+            <!--<cfgfiles>application.properties</cfgfiles>&lt;!&ndash;需要加密的配置文件，般是classes目录下的ym或properties文件(可为空，多个用"，"分割)&ndash;&gt;-->
+            <!--<libjars></libjars>&lt;!&ndash;jar包lib下要加密jar文件名(可为空，多个用”,"分割)&ndash;&gt;-->
+            <!--</configuration>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<phase>package</phase>-->
+            <!--<goals>-->
+            <!--<goal>classFinal</goal>-->
+            <!--</goals>-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--</plugin>-->
+
+            <!--docker插件-->
+            <!--<plugin>-->
+            <!--<groupId>com.spotify</groupId>-->
+            <!--<artifactId>docker-maven-plugin</artifactId>-->
+            <!--<version>1.0.0</version>-->
+            <!--<configuration>-->
+            <!--&lt;!&ndash;指定了生成的 Docker 镜像的名称，这里是"yun-server"&ndash;&gt;-->
+            <!--<imageName>system</imageName>-->
+            <!--&lt;!&ndash;指定了 Dockerfile 的位置，它位于项目的主目录下的“src/main/docker”目录中&ndash;&gt;-->
+            <!--<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>-->
+            <!--<resources>-->
+            <!--<resource>-->
+            <!--&lt;!&ndash;指定了资源在 Docker 镜像中的目标路径，这里是根目录 ("/")&ndash;&gt;-->
+            <!--<targetPath>/</targetPath>-->
+            <!--&lt;!&ndash;元素指定了资源所在的目录，这里是构建目录&ndash;&gt;-->
+            <!--<directory>${project.build.directory}</directory>-->
+            <!--&lt;!&ndash;指定了要包含在镜像中的资源文件，这里是构建输出的最终名称&ndash;&gt;-->
+            <!--<include>${project.build.finalName}.jar</include>-->
+            <!--</resource>-->
+            <!--</resources>-->
+            <!--</configuration>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 

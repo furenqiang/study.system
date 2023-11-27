@@ -1,5 +1,6 @@
 package com.furenqiang.system.entity;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -9,11 +10,13 @@ import org.springframework.security.core.GrantedAuthority;
 @TableName("sys_Role") //指定对应数据表
 public class SysRole implements GrantedAuthority {
 
-    @TableId(value = "id",type = IdType.AUTO)//指定自增策略
+    @TableId(value = "id", type = IdType.AUTO)//指定自增策略
     private Integer id;
 
+    @Excel(name = "权限名称", width = 30)
     private String roleName;
 
+    @Excel(name = "权限描述", width = 30)
     private String roleDesc;
 
     public Integer getId() {
@@ -45,5 +48,14 @@ public class SysRole implements GrantedAuthority {
     @Override
     public String getAuthority() {
         return roleName;
+    }
+
+    public SysRole() {
+    }
+
+    public SysRole(Integer id, String roleName, String roleDesc) {
+        this.id = id;
+        this.roleName = roleName;
+        this.roleDesc = roleDesc;
     }
 }

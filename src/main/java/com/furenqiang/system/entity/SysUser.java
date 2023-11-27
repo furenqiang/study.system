@@ -1,5 +1,7 @@
 package com.furenqiang.system.entity;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import cn.afterturn.easypoi.excel.annotation.ExcelCollection;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -16,24 +18,38 @@ import java.util.List;
 @TableName("sys_user") //指定对应数据表
 public class SysUser implements UserDetails {
 
-    @TableId(value = "id",type = IdType.AUTO)//指定自增策略
+    @TableId(value = "id", type = IdType.AUTO)//指定自增策略
     private Integer id;
 
+    @Excel(name = "用户名", width = 10, needMerge = true)//needMerge 是否合并单元格
     private String username;
 
     private String password;
 
+    @Excel(name = "状态", replace = {"在线_0", "离线_1"}, needMerge = true)//replace 状态值为0替换为在线 状态值为1替换成离线
     private Integer status;
 
     private Integer creatorId;
 
     private String creatorName;
 
+    @Excel(name = "创建时间", format = "yyyy-MM-dd", width = 25, needMerge = true)//format 格式化时间yyyy-MM-dd
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") // 前端时间字符串转java时间戳
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8") // 后台时间戳转前端时间字符串(json对象)
     private Date createTime;
 
+    @ExcelCollection(name = "用户权限")//一对多中的多个属性
     private List<SysRole> roles;
+
+    public SysUser() {
+    }
+
+    public SysUser(String username, String password, Integer creatorId, String creatorName) {
+        this.username = username;
+        this.password = password;
+        this.creatorId = creatorId;
+        this.creatorName = creatorName;
+    }
 
     public Integer getId() {
         return id;
@@ -129,15 +145,5 @@ public class SysUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public SysUser() {
-    }
-
-    public SysUser(String username, String password,Integer creatorId,String creatorName) {
-        this.username = username;
-        this.password = password;
-        this.creatorId = creatorId;
-        this.creatorName = creatorName;
     }
 }
