@@ -41,10 +41,10 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-#eureka:
-#  client:
-#    service-url:
-#      defaultZone: http://localhost:10001/eureka/  # 服务中心地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:10001/eureka/  # 服务中心地址
 
 #Swagger lock
 swagger:

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.furenqiang.system.mapper.SysExceptionLogMapper">
+    <resultMap id="BaseResultMap" type="com.furenqiang.system.entity.SysExceptionLog">
+        <result column="id" property="id" jdbcType="INTEGER" />
+        <result column="params" property="params" jdbcType="VARCHAR" />
+        <result column="method" property="method" jdbcType="VARCHAR" />
+        <result column="excName" property="excName" jdbcType="VARCHAR" />
+        <result column="excMessage" property="excMessage" jdbcType="VARCHAR" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="userId" property="userId" jdbcType="INTEGER" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="ip" property="ip" jdbcType="VARCHAR" />
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <resultMap id="BaseResultVOMap" type="com.furenqiang.system.vo.SysExceptionLogCountVO">
+        <result column="id" property="id" jdbcType="INTEGER" />
+        <result column="params" property="params" jdbcType="VARCHAR" />
+        <result column="method" property="method" jdbcType="VARCHAR" />
+        <result column="excName" property="excName" jdbcType="VARCHAR" />
+        <result column="excMessage" property="excMessage" jdbcType="VARCHAR" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="userId" property="userId" jdbcType="INTEGER" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="ip" property="ip" jdbcType="VARCHAR" />
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="num" property="num" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		id,params,method,excName,excMessage,username,userId,url,ip,createTime
+	</sql>
+
+    <insert id="addExceptLog" parameterType="com.furenqiang.system.entity.SysExceptionLog" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into sys_exception_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="params != null and params != ''">
+                params,
+            </if>
+            <if test="method != null and method != ''">
+                method,
+            </if>
+            <if test="excName != null and excName != ''">
+                excName,
+            </if>
+            <if test="excMessage != null and excMessage != ''">
+                excMessage,
+            </if>
+            <if test="username != null and username != ''">
+                username,
+            </if>
+            <if test="userId != null and userId != ''">
+                userId,
+            </if>
+            <if test="url != null and url != ''">
+                url,
+            </if>
+            <if test="ip != null and ip != ''">
+                ip,
+            </if>
+            <if test="createTime != null">
+                createTime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="params != null and params != ''">
+                #{params,jdbcType=VARCHAR},
+            </if>
+            <if test="method != null and method != ''">
+                #{method,jdbcType=VARCHAR},
+            </if>
+            <if test="excName != null and excName != ''">
+                #{excName,jdbcType=VARCHAR},
+            </if>
+            <if test="excMessage != null and excMessage != ''">
+                #{excMessage,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null and username != ''">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null and userId != ''">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="url != null and url != ''">
+                #{url,jdbcType=INTEGER},
+            </if>
+            <if test="ip != null and ip != ''">
+                #{ip,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="getExceptionLogListByParams" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        sys_exception_log AS sel
+        WHERE
+        1 = 1
+        <if test="username != null and username != ''">
+            and sel.username like concat(concat('%',#{username,jdbcType=VARCHAR}),'%')
+        </if>
+        <if test="excName != null and excName != ''">
+            and sel.excName like concat(concat('%',#{excName,jdbcType=VARCHAR}),'%')
+        </if>
+        <if test="method != null and method != ''">
+            and sel.method like concat(concat('%',#{method,jdbcType=VARCHAR}),'%')
+        </if>
+        <if test="ip != null and ip != ''">
+            and sel.ip like concat(concat('%',#{ip,jdbcType=VARCHAR}),'%')
+        </if>
+        ORDER BY sel.createTime DESC
+    </select>
+
+    <!--<update id="changeStatus" parameterType="com.furenqiang.system.entity.SysUser">-->
+        <!--update sys_user-->
+        <!--<set>-->
+            <!--<if test="status != null and status != ''">-->
+                <!--status = #{status,jdbcType=INTEGER},-->
+            <!--</if>-->
+        <!--</set>-->
+        <!--where id = #{id,jdbcType=INTEGER}-->
+    <!--</update>-->
+
+    <!--<update id="updateUser" parameterType="com.furenqiang.system.entity.SysUser">-->
+        <!--update sys_user-->
+        <!--<set>-->
+            <!--<if test="password != null and password != ''">-->
+                <!--password = #{password,jdbcType=INTEGER},-->
+            <!--</if>-->
+        <!--</set>-->
+        <!--where id = #{id,jdbcType=INTEGER}-->
+    <!--</update>-->
+
+    <!--<select id="getUserListByParams" resultMap="BaseResultMap">-->
+    <!--SELECT-->
+    <!--su.username,-->
+    <!--su.PASSWORD,-->
+    <!--group_concat(sr.rolename) AS rolename,-->
+    <!--group_concat(sr.roledesc) AS roledesc-->
+    <!--FROM-->
+    <!--sys_user su,-->
+    <!--sys_user_role sur,-->
+    <!--sys_role sr-->
+    <!--WHERE-->
+    <!--su.STATUS = 1-->
+    <!--<if test="status != null">-->
+    <!--and c.status=#{status,jdbcType=DECIMAL}-->
+    <!--</if>-->
+    <!--AND su.id = sur.uid-->
+    <!--AND sur.rid = sr.id-->
+    <!--GROUP BY username-->
+    <!--</select>-->
+    <select id="countExceptByParams" resultMap="BaseResultVOMap">
+        SELECT
+            count(sel.id) AS num,
+            DATE_FORMAT( sel.createTime, '%Y-%m-%d' ) AS createTime
+        FROM
+            sys_exception_log AS sel
+        GROUP BY
+            DATE_FORMAT( sel.createTime, '%Y-%m-%d' )
+        ORDER BY
+            DATE_FORMAT( sel.createTime, '%Y-%m-%d' )
+            LIMIT 0,7
+    </select>
+
+    <select id="countExceptTop3" resultMap="BaseResultVOMap">
+        SELECT
+            count( sel.id ) AS num,
+            sel.excName AS excName
+        FROM
+            sys_exception_log AS sel
+        GROUP BY
+            sel.excName
+        ORDER BY
+            num
+        LIMIT 0,3
+    </select>
+
+</mapper>
