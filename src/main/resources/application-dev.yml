@@ -82,3 +82,7 @@ myprops:
   #            timeoutInMilliseconds: 12000
   #        timeout:
   #          enabled: false
+robot:
+  age: 23
+  email: aa@xx.com
+  name: EricFRQ
