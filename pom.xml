@@ -19,12 +19,12 @@
     </properties>
 
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-web</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-web</artifactId>-->
+        <!--        </dependency>-->
 
-<!--        这里使用自己的starter，也是就集成了robot这个测试功能的system-strater-->
+        <!-- 这里使用自己的starter，也是就集成了robot这个测试功能的system-strater-->
         <dependency>
             <groupId>com.furenqiang</groupId>
             <artifactId>starter</artifactId>
@@ -53,11 +53,26 @@
             <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
 
-<!--        &lt;!&ndash; security整体依赖 &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-security</artifactId>-->
-<!--        </dependency>-->
+        <!-- security整体依赖 -->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-security</artifactId>-->
+        <!--        </dependency>-->
+
+        <!-- 参数验证依赖-->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>8.0.0.Final</version>
+        </dependency>
+
+        <!-- JWT-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.auth0</groupId>-->
+        <!--            <artifactId>java-jwt</artifactId>-->
+        <!--            <version>4.4.0</version>-->
+        <!--        </dependency>-->
+
     </dependencies>
 
     <build>
@@ -65,20 +80,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <!--<configuration>-->
-                <!--<mainClass>com.furenqiang.system.SystemApplication</mainClass>-->
-                <!--<executable>true</executable>-->
-                <!--<includeSystemScope>true</includeSystemScope>-->
-                <!--</configuration>-->
             </plugin>
-
-            <!--在这里修改版本-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.4.3</version>
-            </plugin>
-            <!---->
 
         </plugins>
     </build>

@@ -3,35 +3,13 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/study_system?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+    url: jdbc:mysql://1.94.47.104:3306/study_system?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
     username: root
-    password: root
+    password: 123321Frq
     driver-class-name: com.mysql.cj.jdbc.Driver
   application:
-    name: study-system
-  #  redis:
-  #    host: 192.168.88.41
-  #    port: 6379
-  #    password: wellsun_2018
-  #    database: 0
-  #    timeout: 5000
-  #    jedis:
-  #      pool:
-  #        max-active: 50
-  #        max-wait: 3000
-  #        max-idle: 20
-  #        min-idle: 2
-  #  session:
-  #    store-type: redis
-  #    timeout: 1800
-  #    redis:
-  #      namespace: wssf
+    name: study-system-boot3.x
 
-#  jackson:
-#    date-format: yyyy-MM-dd HH:mm:ss
-#    time-zone: GMT+8
-#  main:
-#    allow-bean-definition-overriding: true
 mybatis-plus:
   mapper-locations:
     - classpath:mapper/*Mapper.xml
@@ -41,48 +19,7 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-#eureka:
-#  client:
-#    service-url:
-#      defaultZone: http://localhost:10001/eureka/  # 服务中心地址
-
-#Swagger lock
-swagger:
-  enable: true
-
-myprops:
-  fileUrl: http://127.0.0.1:8088/
-  filePath: D:\\upload\
-  unzipPath: D:\\upload\unzipFile\
-  ftpIp: 127.0.0.1
-  ftpPort: 21
-  ftpUsername: EDZ
-  ftpPassword: 123456
-  ftpPath: D:\\ftp
-  ftpUnzipPath: D:\\ftp\unzipFile\
-  ftpUnzipUrl: ftp://127.0.0.1/unzipFile/
-
-  #
-  #feign:
-  #  httpclient:
-  #    connection-timeout: 30000
-  #  hystrix:
-  #    enabled: true
-  #
-  #ribbon:
-  #  ReadTimeout: 5000
-  #  SocketTimeout: 5000
-  #
-  #hystrix:
-  #  command:
-  #    default:
-  #      execution:
-  #        isolation:
-  #          thread:
-  #            timeoutInMilliseconds: 12000
-  #        timeout:
-  #          enabled: false
-robot:
-  age: 23
-  email: aa@xx.com
-  name: EricFRQ
+#robot:
+#  age: 23
+#  email: aa@xx.com
+#  name: EricFRQ
