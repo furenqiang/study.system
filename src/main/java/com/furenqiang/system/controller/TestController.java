@@ -19,14 +19,20 @@ import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -160,5 +166,22 @@ public class TestController {
         data.add(sysUser1);
         data.add(sysUser2);
         return data;
+    }
+
+    /**
+     * @return
+     * @Description 测试获取spring security当前登陆人信息
+     * @Time 2024年1月8日
+     * @Author Eric
+     */
+    @Log("测试获取spring security当前登陆人信息")
+    @ApiOperation(value = "测试获取spring security当前登陆人信息", httpMethod = "GET")
+    @GetMapping("/loginInfo")
+    public ResponseResult loginInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+        return ResponseResult.ok("用户名：" + username + "；角色：" + authorities);
     }
 }

@@ -3,12 +3,12 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/study_system?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+    url: jdbc:mysql://1.94.47.104:3306/study_system?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
     username: root
-    password: root
+    password: 123321Frq
     driver-class-name: com.mysql.cj.jdbc.Driver
   application:
-    name: study-system
+    name: study-system-dev
   #  redis:
   #    host: 192.168.88.41
   #    port: 6379
@@ -48,7 +48,7 @@ mybatis-plus:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:10011/eureka/  # 服务中心地址
+      defaultZone: http://1.94.47.104:10001/eureka/  # 服务中心地址
 
 #Swagger lock
 swagger:
