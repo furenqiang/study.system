@@ -3,10 +3,12 @@ package com.furenqiang.system.controller;
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.furenqiang.system.aop.Log;
+import com.furenqiang.system.common.ResponseEnum;
 import com.furenqiang.system.common.ResponseResult;
 import com.furenqiang.system.entity.SysRole;
 import com.furenqiang.system.entity.SysUser;
 import com.furenqiang.system.entity.Test;
+import com.furenqiang.system.exception.SystemException;
 import com.furenqiang.system.mapper.SysUserMapper;
 import com.furenqiang.system.service.TestService;
 import io.swagger.annotations.Api;
@@ -27,7 +29,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -59,6 +60,7 @@ public class TestController {
     @ApiImplicitParams({@ApiImplicitParam(name = "param", value = "参数", dataType = "String")})
     @GetMapping("/testHttp")
     public String testHttp(String param) throws Exception {
+        if (true) throw new SystemException(ResponseEnum.FAIL);
         log.warn("日志测试,测试接口http请求");
         return param;
     }
@@ -90,13 +92,12 @@ public class TestController {
      * multiplier (指定延迟倍数)默认为0，表示固定暂停1秒后进行重试，如果把multiplier设置为1.5，
      * 则第一次重试为2秒，第二次为3秒，第三次为4.5秒。
      */
-    @Retryable(value = Exception.class, maxAttempts = 4, backoff = @Backoff(delay = 2000, multiplier = 1.5))
-    @Log("测试异常捕获")
+    @Retryable(value = NullPointerException.class, maxAttempts = 4, backoff = @Backoff(delay = 2000, multiplier = 1.5))
+    @Log("测试重试机制")
 //    @PreAuthorize("hasAnyAuthority('vip','select')")
-    @ApiOperation(value = "测试异常捕获", httpMethod = "GET")
-    @GetMapping("/testException")
-    public ResponseResult testException() {
-//        if (true) throw new RuntimeException();
+    @ApiOperation(value = "测试重试机制", httpMethod = "GET")
+    @GetMapping("/testRetry")
+    public ResponseResult testRetry() {
         //模拟空指针异常
         Test test = new Test();
         String name = test.getName();
@@ -184,4 +185,19 @@ public class TestController {
         Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
         return ResponseResult.ok("用户名：" + username + "；角色：" + authorities);
     }
+
+    /**
+     * @return
+     * @Description 测试获取spring security当前登陆人信息
+     * @Time 2024年1月8日
+     * @Author Eric
+     */
+    @Log("测试捕获自定义异常")
+    @ApiOperation(value = "测试捕获自定义异常", httpMethod = "GET")
+    @GetMapping("/catchSystemException")
+    public ResponseResult catchSystemException() throws Exception {
+        if (true) throw new SystemException(ResponseEnum.FAIL);
+        return new ResponseResult();
+    }
+
 }

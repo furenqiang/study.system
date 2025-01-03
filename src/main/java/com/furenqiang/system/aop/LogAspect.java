@@ -2,9 +2,11 @@ package com.furenqiang.system.aop;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.fastjson.JSON;
+import com.furenqiang.system.common.ResponseEnum;
 import com.furenqiang.system.entity.SysExceptionLog;
 import com.furenqiang.system.entity.SysLog;
 import com.furenqiang.system.entity.SysUser;
+import com.furenqiang.system.exception.SystemException;
 import com.furenqiang.system.mapper.SysExceptionLogMapper;
 import com.furenqiang.system.mapper.SysLogMapper;
 import com.furenqiang.system.utils.HttpContextUtils;
@@ -57,6 +59,7 @@ public class LogAspect {
             result = point.proceed();
         } catch (Throwable e) {
             e.printStackTrace();
+            throw new SystemException(ResponseEnum.FAIL);
         }
         // 执行时长(毫秒)
         long time = System.currentTimeMillis() - beginTime;
